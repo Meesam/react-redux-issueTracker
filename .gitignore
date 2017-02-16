@@ -1,0 +1,17 @@
+*.ipr
+*.iml
+*.iws
+.idea
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+npm-debug.log
+public/dist
+public/bower_components/*
+node_modules
