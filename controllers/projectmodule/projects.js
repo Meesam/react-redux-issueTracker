@@ -9,6 +9,7 @@ let Projects = mongoose.model('Projects');
 
 exports.getAllProject=function(aTableInfo,callback){
 	let totalRecord=null;
+	/*
 	let perPage = aTableInfo.RPP
 	 , page = Math.max(0, aTableInfo.CurPage);
 	Projects.count({},function(err,data){
@@ -17,19 +18,18 @@ exports.getAllProject=function(aTableInfo,callback){
 		else
 			totalRecord=data;
 	});
-
+  */
 	Projects.find(function(err,data){
 		if(err)
 			callback(null,err);
 		else {
 		let	obj = {
-				status: 'success',
-		    	count:totalRecord,
+				 status: 'success',
 			    data: data
 			};
 			callback(globalobj.globalObject(obj));
 		}
-	}).skip(perPage * (page-1)).limit(perPage).sort(aTableInfo.SortBy);
+	});
 };
 
 exports.addProject=function(projectdetails,callback){
