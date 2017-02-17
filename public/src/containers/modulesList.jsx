@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {fetchModules,fetchModulesSuccess,fetchModulesFailure} from '.././actions/modules.jsx';
-import Modules from '.././components/modulesList.jsx';
+import ModulesList from '.././components/modulesList.jsx';
 
 const  mapStateToProps=(state)=>{
   return{
@@ -18,4 +18,4 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Modules);
+export default connect(mapStateToProps, mapDispatchToProps)(ModulesList);

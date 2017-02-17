@@ -10,13 +10,13 @@ import App from './components/App.jsx';
 import Home from './components/home.jsx';
 import ProjectIndex from './pages/projectIndex.jsx';
 import Header from './staticComponents/header.jsx';
-import Modules from './components/modulesList.jsx';
+
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store)
 
 render(<Header />,document.getElementById('header'));
-render(<Modules />, document.getElementById('modules'))
+
 render(
   <Provider store={store}>
     <Router history={history}>
