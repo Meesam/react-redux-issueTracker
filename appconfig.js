@@ -1,6 +1,9 @@
  'use strict';
 
+
 exports.webPort=9000;
+
+exports.ROOT_URL = 'http://localhost:9000/api';
 
 /* This setting for Sql server
 exports.dbconfig={
