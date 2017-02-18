@@ -13,11 +13,27 @@ class ProjectList extends Component{
   renderProject(project){
    return project.map((item)=>{
      return(
-       <li className="list-group-item" key={item._id}>
-         <Link style={{color:'black'}} to={"project/" + item._id}>
-           <h3 className="list-group-item-heading">{item.ProjectName}</h3>
-         </Link>
+       <div key={item._id}>
+         <li className="time-label">
+          <span className="bg-red">
+            18 Feb. 2017
+          </span>
        </li>
+       <li>
+         <i className="fa fa-envelope bg-blue"></i>
+         <div className="timeline-item">
+           <span className="time"><i class="fa fa-clock-o"></i> 12:05</span>
+              <h3 className="timeline-header"><a href="#">{item.ProjectName}</a></h3>
+              <div className="timeline-body">
+                 {item.Description}
+              </div>
+              <div className="timeline-footer">
+                <a className="btn btn-primary btn-xs">Read more</a>
+                <a className="btn btn-danger btn-xs">Delete</a>
+              </div>
+         </div>
+       </li>
+       </div>
      );
    })
   }
@@ -31,11 +47,10 @@ class ProjectList extends Component{
       return <div className="alert-error">${error.message}</div>
     }
     return(
-      <div className="container">
-        <h1>Project</h1>
-        <ul className="list-group">
-          {this.renderProject(projects)}
-        </ul>
+      <div>
+         <ul className="timeline">
+            {this.renderProject(projects)}
+         </ul>
       </div>
     )
   }

@@ -1,6 +1,11 @@
 import React,{Component} from 'react';
 import { Link } from 'react-router';
 
+
+const defaultStyle = {
+  marginLeft: 20
+};
+
 class Modules extends Component{
   constructor(props){
     super(props)

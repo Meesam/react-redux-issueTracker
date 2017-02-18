@@ -1,5 +1,7 @@
-var webpack = require('webpack');
-var path=require('path');
+const webpack = require('webpack');
+const path=require('path');
+const nodeModulesPath = path.resolve(__dirname, 'node_modules');
+const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
 entry: './public/src/index.js',
@@ -11,10 +13,8 @@ entry: './public/src/index.js',
     loaders: [
       {
         test:/\.css$/,
-        loader:'css-loader!style-loader',
-        include: [
-                    path.resolve(__dirname, "not_exist_path")
-                ],
+        loader: 'style-loader!css-loader?modules',
+        include: /flexboxgrid/,
       },
       {
         test: /\.jsx?$/,
@@ -43,7 +43,9 @@ entry: './public/src/index.js',
         warnings: false
       }
     }),*/
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+
   ],
   watch:true
 }
