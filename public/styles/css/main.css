@@ -7,3 +7,8 @@ body {
   line-height: 20px;
   margin: 0px;
 }
+
+.divstyle {
+    textAlign: 'center',
+    background-color: #ffd699 !important;
+  }

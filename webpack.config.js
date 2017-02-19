@@ -12,11 +12,6 @@ entry: './public/src/index.js',
   module: {
     loaders: [
       {
-        test:/\.css$/,
-        loader: 'style-loader!css-loader?modules',
-        include: /flexboxgrid/,
-      },
-      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
@@ -29,7 +24,9 @@ entry: './public/src/index.js',
       { test: /\.ttf$/,    loader: "file-loader" },
       { test: /\.eot$/,    loader: "file-loader" },
       { test: /\.svg$/,    loader: "file-loader" },
-      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
+      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' },
+      {test: /(\.css-loader|\.scss)$/, loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],include: /flexboxgrid/},
+      {test: /\.ico$/, loader: 'file?name=[name].[ext]'},
     ]
   },
   plugins: [

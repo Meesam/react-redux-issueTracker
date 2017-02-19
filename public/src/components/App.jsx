@@ -9,17 +9,9 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import SignForm from '.././containers/signInContainer.jsx'; 
+import DefaultPage from '.././staticComponents/default.jsx';
 
-
-class Login extends Component {
-  static muiName = 'FlatButton';
-
-  render() {
-    return (
-      <FlatButton {...this.props} label="Login" />
-    );
-  }
-}
 
 const Logged = (props) => (
   <IconMenu
@@ -42,29 +34,32 @@ class App extends Component {
   constructor(props){
     super(props)
      this.state = {
-      logged: true,
+      logged: false,
     };
   }
-
-   handleChange = (event, logged) => {
-    this.setState({logged: logged});
-  };
-
   render() {
+    if(!this.state.logged){
+      return(
+        <div>
+        <DefaultPage />
+         <div style={{tectAlign:'center'}}>     
+          {this.props.children}
+         </div>
+         </div>
+        )
+    }
     return (
         <div className="page_container">
         <div>
         <AppBar
           title="Issue Tracker"
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
-          
-          iconElementRight={this.state.logged ? <Logged /> : <Login />}
+          iconElementRight={<Logged />}
         />
-      </div>
+        </div>
         <div>     
           {this.props.children}
-        </div>
-        </div>
+         </div>
+      </div>
 
     );
   }
