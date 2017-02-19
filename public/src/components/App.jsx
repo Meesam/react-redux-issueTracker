@@ -11,6 +11,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import SignForm from '.././containers/signInContainer.jsx'; 
 import DefaultPage from '.././staticComponents/default.jsx';
+import assign from 'object-assign';
+import {Layout, Flex, Fixed} from 'react-layout-pane';
 
 
 const Logged = (props) => (
@@ -34,33 +36,32 @@ class App extends Component {
   constructor(props){
     super(props)
      this.state = {
-      logged: false,
+      logged: true,
     };
   }
   render() {
-    if(!this.state.logged){
-      return(
-        <div>
-        <DefaultPage />
-         <div style={{tectAlign:'center'}}>     
-          {this.props.children}
-         </div>
-         </div>
-        )
-    }
-    return (
-        <div className="page_container">
-        <div>
+    return (  
+     <Layout type="column">
+       <Fixed className="header">
         <AppBar
           title="Issue Tracker"
           iconElementRight={<Logged />}
         />
-        </div>
-        <div>     
-          {this.props.children}
-         </div>
-      </div>
-
+       </Fixed>
+       <Flex>
+           <Layout type="row">
+               <Fixed className="sidebar">Fixed Sidebar</Fixed>
+               <Flex className="content">
+                 <div className="container">     
+                  {this.props.children}
+                 </div>
+               </Flex>
+           </Layout>
+       </Flex>
+       <Fixed className="header">
+            Fixed Footer
+        </Fixed>
+     </Layout>
     );
   }
 }

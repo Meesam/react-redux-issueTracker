@@ -6,13 +6,43 @@
     <base href="/">
     <title>React Issue Tracker</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" type="text/css" href="styles/css/main.css">
+    <style type="text/css">
+       *, *:before, *:after {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        font-size: 16px;
+        line-height: 1.5rem;
+        height: 100%;
+        min-height: 100%;
+    }
+ 
+    .header {
+        height: 4rem;
+        color: #fff;
+    }
+ 
+    .sidebar {
+        padding: 1rem;
+        background: rgb(0, 188, 212);
+        width: 8rem;
+        color: #fff;
+    }
+ 
+    .content {
+        padding: 1rem;
+        background: #ECF0F1;
+    }
+    </style>
 
 </head>
 <body>
-  
+  <div id="body"></div>  
 </body>
-<div id="body"></div>
+
 
 <script>
       var WebFontConfig = {
