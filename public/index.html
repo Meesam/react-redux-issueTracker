@@ -6,57 +6,20 @@
     <base href="/">
     <title>React Issue Tracker</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <style type="text/css">
-       *, *:before, *:after {
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-    
-    html, body {
-        font-size: 16px;
-        line-height: 1.5rem;
-        height: 100%;
-        min-height: 100%;
-    }
- 
-    .header {
-        height: 4rem;
-        color: #fff;
-    }
- 
-    .sidebar {
-        padding: 1rem;
-        background: rgb(0, 188, 212);
-        width: 8rem;
-        color: #fff;
-    }
- 
-    .content {
-        padding: 1rem;
-        background: #ECF0F1;
-    }
-    </style>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="styles/css/AdminLTE.min.css">
+
+    <link rel="stylesheet" href="styles/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="bootstrap/css/signin.css">
 
 </head>
-<body>
-  <div id="body"></div>  
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper" id="body"></div>  
 </body>
-
-
-<script>
-      var WebFontConfig = {
-        google: { families: [ 'Roboto:400,300,500:latin' ] }
-      };
-      (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-      })();
-    </script>
 <script src="dist/bundle.js"></script>
 </html>

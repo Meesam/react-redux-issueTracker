@@ -2,10 +2,8 @@ import React ,{ Component } from 'react';
 import {render} from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
-import routes from './routes.jsx';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import theme from './material_ui_raw_theme_file.jsx';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import  $ from 'jquery';
+import 'bootstrap-loader';
 import NotFoundPage from './staticComponents/NotFoundPage.jsx';
 import configureStore from './store/configureStore.jsx';
 import { syncHistoryWithStore, routerReducer} from 'react-router-redux';
@@ -20,10 +18,8 @@ window.React = React;
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store)
 
-injectTapEventPlugin();
 
 render(
-  <MuiThemeProvider muiTheme={theme}>
     <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
@@ -35,5 +31,4 @@ render(
       </Route>  
     </Router>
   </Provider>
-  </MuiThemeProvider>
   , document.getElementById('body'));

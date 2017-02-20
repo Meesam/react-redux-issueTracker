@@ -20,13 +20,18 @@ entry: './public/src/index.js',
            plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
         }
       },
+       {
+        test:/\.css$/,
+        loader:'css-loader!style-loader',
+        include: [
+                    path.resolve(__dirname, "not_exist_path")
+                ],
+      },
       { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf$/,    loader: "file-loader" },
       { test: /\.eot$/,    loader: "file-loader" },
       { test: /\.svg$/,    loader: "file-loader" },
-      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' },
-      {test: /(\.css-loader|\.scss)$/, loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],include: /flexboxgrid/},
-      {test: /\.ico$/, loader: 'file?name=[name].[ext]'},
+      { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
     ]
   },
   plugins: [
