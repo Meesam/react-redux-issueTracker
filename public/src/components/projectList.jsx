@@ -25,14 +25,24 @@ class ProjectList extends Component{
   render(){
     const { projects,error,loading } = this.props.projectList
     if(loading){
-       console.log('i am here');
-      return <div className="alert-info">Wait projects are loading</div>
+      return (
+          <div className="progress">
+            <div className="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: 40}}>
+               <span className="sr-only">40% Complete (success)</span>
+            </div>
+          </div>
+        )
     }
     else if(error){
       return <div className="alert-error">${error.message}</div>
     }
     return(
          <div>
+         <div className="alert alert-success alert-dismissable">
+            <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>  <i className="icon fa fa-check"></i> Success!</h4>
+            Project list loaded successfully !
+         </div>
          <section className="content-header">
             <h1>
              Projects

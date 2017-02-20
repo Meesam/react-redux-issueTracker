@@ -12,7 +12,7 @@ const mapDispatchToProps=(dispatch)=>{
   return{
      fetchProject:()=>{
         dispatch(fetchProject()).then((response)=>{
-          !response.error ? dispatch(fetchProjectSuccess(response.value.data.objdata)):dispatch(fetchProjectFailure(response.payload.data))
+          !response.error ? dispatch(fetchProjectSuccess(response.payload.data.objdata)):dispatch(fetchProjectFailure(response.payload.data))
         });
      }
   }

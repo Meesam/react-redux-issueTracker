@@ -21,6 +21,37 @@ export default function (state=INITIAL_STATE,action) {
     case RESETS_PROJECT:
       return {projects:[],error:null,loading:false};
 
+    case CREATE_POST:
+      return {...state, newPost: {...state.newPost, loading: true}}
+
+    case CREATE_POST_SUCCESS:
+      return {...state, newPost: {post:action.payload, error:null, loading: false}}
+
+    case CREATE_POST_FAILURE:
+      error = action.payload || {message: action.payload.message};
+      return {...state, newPost: {post:null, error:error, loading: false}}
+
+    case RESET_NEW_POST:
+      return {...state,  newPost:{post:null, error:null, loading: false}}
+
+    case VALIDATE_POST_FIELDS:
+      return {...state, newPost:{...state.newPost, error: null, loading: true}}
+
+    case VALIDATE_POST_FIELDS_SUCCESS:
+      return {...state, newPost:{...state.newPost, error: null, loading: false}}
+
+    case VALIDATE_POST_FIELDS_FAILURE:
+      let result = action.payload;
+      if(!result) {
+        error = {message: action.payload.message};
+      } else {
+        error = {title: result.title, categories: result.categories, description: result.description};
+      }
+      return {...state, newPost:{...state.newPost, error: error, loading: false}}
+      
+    case RESET_POST_FIELDS:
+      return {...state, newPost:{...state.newPost, error: null, loading: null}}
+
     default:
       return state;
   }

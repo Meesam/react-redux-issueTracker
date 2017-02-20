@@ -110,6 +110,7 @@
     "redux-form": "^6.5.0",
     "redux-immutable-state-invariant": "1.2.3",
     "redux-logger": "^2.8.1",
+    "redux-promise": "^0.5.3",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0",
     "replace": "0.3.0",

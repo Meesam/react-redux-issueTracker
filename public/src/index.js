@@ -11,6 +11,7 @@ import App from './components/App.jsx';
 import Home from './components/home.jsx';
 import ProjectIndex from './pages/projectIndex.jsx';
 import SignIn from './components/SignInForm.jsx';
+import AddProjectIndex from  './pages/addProjectIndex.jsx'
 
 //for React Developer Tools
 window.React = React;
@@ -27,6 +28,7 @@ render(
         <Route path="/home" component={Home} />
         <Route path="/project" component={ProjectIndex} />
         <Route path="/signin" component={SignIn} />
+        <Route path="/addproject" component={AddProjectIndex} />
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>

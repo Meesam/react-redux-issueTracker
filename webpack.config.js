@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path=require('path');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
-const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 module.exports = {
 entry: './public/src/index.js',
@@ -34,6 +33,7 @@ entry: './public/src/index.js',
       { test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery' }
     ]
   },
+  watch:true,
   plugins: [
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
@@ -46,9 +46,7 @@ entry: './public/src/index.js',
       }
     }),*/
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
 
-  ],
-  watch:true
+  ]
 }
 
