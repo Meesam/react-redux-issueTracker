@@ -15,7 +15,6 @@ apiRoutes.post('/project',function (req,resp,next) {
 			return next(err);
 		}
 		else {
-      console.log(JSON.stringify(data));
 			resp.json(data);
 		}
 	});
@@ -35,7 +34,8 @@ apiRoutes.get('/projects/:projectId',function(req,resp,next){
 
 
 apiRoutes.post('/projects/add',function(req,resp,next){
-	projects.addProject(req.body.Obj,function(data,err){
+	console.log('Project object are ' + JSON.stringify(req.body));
+	projects.addProject(req.body,function(data,err){
 		if(err) {
 			return next(err);
 		}

@@ -12,7 +12,7 @@ const mapDispatchToProps=(dispatch)=>{
   return{
     fetchModules:()=>{
       dispatch(fetchModules()).then((response)=>{
-        !response.error?dispatch(fetchModulesSuccess(response.value.data.objdata)):dispatch(fetchModulesFailure(response.payload.data))
+        !response.error?dispatch(fetchModulesSuccess(response.payload.data.objdata)):dispatch(fetchModulesFailure(response.payload.data))
       });
     }
   }

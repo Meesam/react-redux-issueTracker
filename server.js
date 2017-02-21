@@ -16,7 +16,7 @@
   let config = require('config');
 
 
-    // app configuration
+  // app configuration
   let app=express();
   let apiRoutes = express.Router();
 
@@ -66,9 +66,6 @@
       return res.sendFile(path.join(__dirname+'/public/index.html'));
     }
   });
-
-
-
 
  // this is for run  server on localhost:9000
   app.listen(config.get('WEB_PORT'), function () {

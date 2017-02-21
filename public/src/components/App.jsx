@@ -20,7 +20,7 @@ class App extends Component {
           <Header />
         </div>
         <div>
-          <LeftMenu />
+          <ModulesList />
         </div>
       <div className="content-wrapper">   
         <section class="content">   

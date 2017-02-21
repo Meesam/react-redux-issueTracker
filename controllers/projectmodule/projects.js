@@ -8,8 +8,9 @@ let mongoose=require('mongoose');
 let Projects = mongoose.model('Projects');
 
 exports.getAllProject=function(aTableInfo,callback){
+	console.log('TableInfo are ' +  JSON.stringify(aTableInfo));
+
 	let totalRecord=null;
-	/*
 	let perPage = aTableInfo.RPP
 	 , page = Math.max(0, aTableInfo.CurPage);
 	Projects.count({},function(err,data){
@@ -18,7 +19,6 @@ exports.getAllProject=function(aTableInfo,callback){
 		else
 			totalRecord=data;
 	});
-  */
 	Projects.find(function(err,data){
 		if(err)
 			callback(null,err);
@@ -29,7 +29,7 @@ exports.getAllProject=function(aTableInfo,callback){
 			};
 			callback(globalobj.globalObject(obj));
 		}
-	});
+	}).skip(perPage * (page-1)).limit(perPage).sort('ProjectName');;
 };
 
 exports.addProject=function(projectdetails,callback){

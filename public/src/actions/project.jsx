@@ -7,7 +7,6 @@ export const FETCH_PROJECT_SUCCESS = "FETCH_PROJECT_SUCCESS";
 export const FETCH_PROJECT_FAILURE = "FETCH_PROJECT_FAILURE";
 export const RESETS_PROJECT = "RESETS_PROJECT";
 
-
 //Create new post
 export const CREATE_PROJECT = 'CREATE_PROJECT';
 export const CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
@@ -49,7 +48,7 @@ export function fetchProjectFailure(error) {
 
 export function validateProjectFields(props) {
   //note: we cant have /posts/validateFields because it'll match /posts/:id path!
-  const request = axios.post(`${ROOT_URL}/posts/validate/fields`, props);
+  const request = axios.post(`${URL.ROOT_URL}/posts/validate/fields`, props);
 
   return {
     type: VALIDATE_PROJECT_FIELDS,
@@ -74,18 +73,15 @@ export function resetProjectFields() {
   return {
     type: RESET_PROJECT_FIELDS
   }
-}
-;
+};
 
 
-export function createProject(props, tokenFromStorage) {
+export function createProject(props) {
   const request = axios({
     method: 'post',
     data: props,
-    url: `${ROOT_URL}/posts`,
-    headers: {
-      'Authorization': `Bearer ${tokenFromStorage}`
-    }
+    url: `${URL.ROOT_URL}/projects/add`,
+    headers: []
   });
 
   return {
@@ -103,7 +99,7 @@ export function createProjectSuccess(newPost) {
 
 export function createProjectFailure(error) {
   return {
-    type: CREATE_PROJECT_FAILURECRE,
+    type: CREATE_PROJECT_FAILURE,
     payload: error
   };
 }
@@ -112,5 +108,4 @@ export function resetNewProject() {
   return {
     type: RESET_NEW_PROJECT
   }
-}
-;
+};

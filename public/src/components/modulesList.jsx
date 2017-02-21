@@ -15,6 +15,16 @@ class Modules extends Component{
     this.props.fetchModules();
   }
 
+  renderContent(module){
+    return module.map((item)=>{
+       return(
+         <li className="treeview" key={item._id}>
+           <a href={item.MenuRoute}><i className="fa fa-link"></i> <span>{item.MenuName}</span> <i className="fa fa-angle-left pull-right"></i></a>
+         </li>
+       );
+    })
+  }
+
   render(){
     const {modules,error,loading}=this.props.moduleList;
     return(
@@ -38,11 +48,7 @@ class Modules extends Component{
             </div>
           </form>
           <ul className="sidebar-menu">
-            {modules.map((item)=>{
-              <li className="treeview">
-                <a href={item.MenuRoute}><i className="fa fa-link"></i> <span>{item.MenuName}</span> <i className="fa fa-angle-left pull-right"></i></a>
-              </li>
-            })}
+            {this.renderContent(modules)}
           </ul>
         </section>
       </aside>
