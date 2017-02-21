@@ -19,6 +19,12 @@ export const VALIDATE_PROJECT_FIELDS_SUCCESS = 'VALIDATE_PROJECT_FIELDS_SUCCESS'
 export const VALIDATE_PROJECT_FIELDS_FAILURE = 'VALIDATE_PROJECT_FIELDS_FAILURE';
 export const RESET_PROJECT_FIELDS = 'RESET_PROJECT_FIELDS';
 
+// Project Type DropDown LIST
+export const FETCH_PROJECTTYPE="FETCH_PROJECTTYPE";
+export const FETCH_PROJECTTYPE_SUCCESS="FETCH_PROJECTTYPE_SUCCESS";
+export const FETCH_PROJECTTYPE_FAILURE="FETCH_PROJECTTYPE_FAILURE";
+
+
 export function fetchProject() {
   const request=axios({
     url:`${URL.ROOT_URL}/project`,
@@ -45,6 +51,31 @@ export function fetchProjectFailure(error) {
   }
 }
 
+export function fetchProjectType(){
+  const request=axios({
+    url:`${URL.ROOT_URL}/projecttype`,
+    method:'GET',
+    Headers:[]
+  });
+  return{
+    type:FETCH_PROJECTTYPE,
+    payload:request
+  }
+}
+
+export function fetchProjectTypeSuccess(projectTypes){
+  return{
+    type:FETCH_PROJECTTYPE_SUCCESS,
+    payload:projectTypes
+  }
+}
+
+export function fetchProjectTypeFailure(error){
+  return{
+    type:FETCH_PROJECTTYPE_FAILURE,
+    payload:error
+  }
+}
 
 export function validateProjectFields(props) {
   //note: we cant have /posts/validateFields because it'll match /posts/:id path!

@@ -10,6 +10,16 @@ class ProjectList extends Component{
     this.props.fetchProject();
   }
 
+  componentDidMount(){
+    this.hidesuccessalert()
+  }
+
+  hidesuccessalert(){
+    $('#success-alert').fadeOut( 3000, function() {
+      $( '#success-alert' ).remove();
+    });
+  }
+
   renderProject(project){
    return project.map((item)=>{
      return(
@@ -21,6 +31,7 @@ class ProjectList extends Component{
      );
    })
   }
+
 
   render(){
     const { projects,error,loading } = this.props.projectList
@@ -38,7 +49,7 @@ class ProjectList extends Component{
     }
     return(
          <div>
-         <div className="alert alert-success alert-dismissable">
+         <div id="success-alert" className="alert alert-success alert-dismissable">
             <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
             <h4>  <i className="icon fa fa-check"></i> Success!</h4>
             Project list loaded successfully !

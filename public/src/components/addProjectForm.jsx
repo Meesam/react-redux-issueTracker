@@ -3,10 +3,9 @@ import { Link } from 'react-router';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import renderField from './renderField.jsx';
 import renderTextArea from './renderTextArea.jsx';
+import renderDatePicker from './renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
 import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
-
-
 
 //Client side validation
 function validate(values) {
@@ -76,6 +75,19 @@ class AddProject extends Component{
     //Important! If your component is navigating based on some global state(from say componentWillReceiveProps)
     //always reset that global state back to null when you REMOUNT
     this.props.resetMe();
+
+  }
+
+ /*
+  componentDidMount(){
+    this.props.fetchProjectType();
+  }
+*/
+
+  hidesuccessalert(){
+    $('#success-alert').fadeOut( 3000, function() {
+      $( '#success-alert' ).remove();
+    });
   }
 
 
@@ -95,7 +107,7 @@ class AddProject extends Component{
       );
     } else if(newProject.project && newProject.project.Status==='success') {
       return (
-        <div className="alert alert-success alert-dismissable">
+        <div id="success-alert" className="alert alert-success alert-dismissable">
           <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
           <h4>  <i className="icon fa fa-check"></i> Success!</h4>
           Project Addedd successfully !
@@ -106,11 +118,22 @@ class AddProject extends Component{
     }
   }
 
+  renderProjectTypeOptions(projectTypes){
+    return projectTypes.map((item)=>{
+      return(
+      <option key={item._id} value={item.Title}>{item.Title}</option>
+      )
+
+    })
+  }
+
   render(){
+   // const { projectTypes,error,loading } = this.props.projectTypeList;
     const {handleSubmit, submitting, newProject} = this.props;
     return(
       <div>
         { this.renderError(newProject) }
+        {this.hidesuccessalert()}
         <section className="content-header">
           <h1>
             Add Project
@@ -121,7 +144,6 @@ class AddProject extends Component{
             <div className="box">
               <form onSubmit={ handleSubmit(validateAndCreateProject) }>
               <div className="box-body">
-
                 <div className="row">
                   <div className="col-sm-3">
                     <Field
@@ -134,22 +156,27 @@ class AddProject extends Component{
                     <Field
                       name="StartDate"
                       type="text"
-                      component={ renderField }
+                      component={ renderDatePicker }
                       label="Start Date" />
                   </div>
                   <div className="col-sm-3">
                     <Field
                       name="EndDate"
                       type="text"
-                      component={ renderField }
+                      component={ renderDatePicker }
                       label="End Date" />
                   </div>
                   <div className="col-sm-3">
-                    <Field
-                      name="ProjectType"
-                      type="text"
-                      component={ renderField }
-                      label="Project Type" />
+                    <label>Project Type</label>
+                    <div>
+                      <Field name="ProjectType" className="form-control"  component="select">
+                        <option></option>
+                        <option value="Internal">Internal</option>
+                        <option value="External">External</option>
+                        <option></option>
+                        {/*{this.renderProjectTypeOptions(projectTypes)}*/}
+                      </Field>
+                    </div>
                   </div>
                   <div className="col-sm-6">
                     <Field

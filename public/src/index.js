@@ -12,6 +12,7 @@ import Home from './components/home.jsx';
 import ProjectIndex from './pages/projectIndex.jsx';
 import SignIn from './components/SignInForm.jsx';
 import AddProjectIndex from  './pages/addProjectIndex.jsx'
+import '../styles/css/AdminLTE.css';
 
 //for React Developer Tools
 window.React = React;

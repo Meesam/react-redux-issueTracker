@@ -10,6 +10,7 @@
   let statusapi=require('./api/statusapi');
   let elastic=require('./api/elasticSearchapi');
   let projectapi=require('./api/projectapi');
+  let projecttypeapi=require('./api/projectTypeapi');
   let cookieparser=require('cookie-parser');
   let responseTime=require('response-time');
   let logger=require('./core/Logger');
@@ -55,6 +56,9 @@
 
 //status routing middleware
   app.use('/api', statusapi);
+
+  //project type routing middleware
+  app.use('/api', projecttypeapi);
 
 
 

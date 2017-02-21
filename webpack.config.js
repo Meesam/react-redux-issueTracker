@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path=require('path');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
+const ExtractTextPlugin=require('extract-text-webpack-plugin');
 
 module.exports = {
 entry: './public/src/index.js',
@@ -21,10 +22,10 @@ entry: './public/src/index.js',
       },
        {
         test:/\.css$/,
-        loader:'css-loader!style-loader',
-        include: [
-                    path.resolve(__dirname, "not_exist_path")
-                ],
+        loader:ExtractTextPlugin.extract({
+          fallbackLoader:'style',
+          loader:'css!sass'
+        })
       },
       { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf$/,    loader: "file-loader" },
@@ -40,6 +41,7 @@ entry: './public/src/index.js',
       $: 'jquery',
       jquery: 'jquery'
     }),
+    new ExtractTextPlugin('./public/dist/style.css'),
     /*new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

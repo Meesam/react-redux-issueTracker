@@ -40,6 +40,7 @@ require('../models/userModel');
 require('../models/appMenuModel');
 require('../models/projectModel');
 require('../models/userDetailModel');
+require('../models/projectTypeModel');
 })();
 
 
