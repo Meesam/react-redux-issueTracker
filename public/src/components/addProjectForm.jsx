@@ -164,10 +164,7 @@ class AddProject extends Component{
                   <div className="col-sm-3">
                     <label>Project Type</label>
                     <div>
-                      <Field
-                        name="ProjectType"
-                        component={SelectOption}
-                      />
+                      <SelectOption />
                     </div>
                   </div>
                   <div className="col-sm-6">

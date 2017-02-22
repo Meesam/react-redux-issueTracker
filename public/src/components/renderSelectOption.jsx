@@ -11,26 +11,17 @@ export default class SelectOption extends Component{
     this.props.fetchProjectType();
   }
 
-  onChange(event) {
-    if (this.props.input.onChange) {
-      this.props.input.onChange(event.value);
-    }
-  }
-
   render(){
     const { projectTypes,error,loading } = this.props.projectTypeList;
+     console.log('project type data are ' + JSON.stringify(projectTypes));
      const option=projectTypes.map((item)=>{
      return <option key={item._id} value={item.Title}>{item.Title}</option>
     });
 
     return(
-      <Select
-        {...this.props}
-        value={this.props.input || ''}
-        onBlur={() => this.props.input.onBlur(this.props.input)}
-        onChange={this.onChange.bind(this)}
-        options={option}
-      />
+      <select className="form-control">
+        {option}
+      </select>
     )
   }
 }
