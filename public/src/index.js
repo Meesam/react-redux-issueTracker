@@ -12,7 +12,10 @@ import Home from './components/home.jsx';
 import ProjectIndex from './pages/projectIndex.jsx';
 import SignIn from './components/SignInForm.jsx';
 import AddProjectIndex from  './pages/addProjectIndex.jsx'
+import '!style-loader!css-loader!sass-loader!font-awesome/css/font-awesome.css';
 import '../styles/css/AdminLTE.css';
+import '../styles/css/skins/skin-blue.min.css';
+
 
 //for React Developer Tools
 window.React = React;

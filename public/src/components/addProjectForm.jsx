@@ -5,7 +5,8 @@ import renderField from './renderField.jsx';
 import renderTextArea from './renderTextArea.jsx';
 import renderDatePicker from './renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
-import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
+import { createProject, createProjectSuccess, createProjectFailure, resetNewProject , fetchProjectType} from '../actions/project.jsx';
+import SelectOption from '.././pages/projectType.jsx';
 
 //Client side validation
 function validate(values) {
@@ -48,6 +49,8 @@ const asyncValidate = (values, dispatch) => {
 
 //For any field errors upon submission (i.e. not instant check)
 const validateAndCreateProject = (values, dispatch) => {
+  console.log('submit values are' + JSON.stringify(values));
+
   return dispatch(createProject(values))
     .then(result => {
       // Note: Error's "data" is in result.payload.response.data (inside "response")
@@ -75,14 +78,8 @@ class AddProject extends Component{
     //Important! If your component is navigating based on some global state(from say componentWillReceiveProps)
     //always reset that global state back to null when you REMOUNT
     this.props.resetMe();
-
   }
 
- /*
-  componentDidMount(){
-    this.props.fetchProjectType();
-  }
-*/
 
   hidesuccessalert(){
     $('#success-alert').fadeOut( 3000, function() {
@@ -123,12 +120,10 @@ class AddProject extends Component{
       return(
       <option key={item._id} value={item.Title}>{item.Title}</option>
       )
-
     })
   }
 
   render(){
-   // const { projectTypes,error,loading } = this.props.projectTypeList;
     const {handleSubmit, submitting, newProject} = this.props;
     return(
       <div>
@@ -169,13 +164,10 @@ class AddProject extends Component{
                   <div className="col-sm-3">
                     <label>Project Type</label>
                     <div>
-                      <Field name="ProjectType" className="form-control"  component="select">
-                        <option></option>
-                        <option value="Internal">Internal</option>
-                        <option value="External">External</option>
-                        <option></option>
-                        {/*{this.renderProjectTypeOptions(projectTypes)}*/}
-                      </Field>
+                      <Field
+                        name="ProjectType"
+                        component={SelectOption}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
