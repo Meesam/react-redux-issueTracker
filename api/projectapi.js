@@ -32,6 +32,17 @@ apiRoutes.get('/projects/:projectId',function(req,resp,next){
 	});
 });
 
+  apiRoutes.get('/suggestprojects/:name',function(req,resp,next){
+    projects.getProjectByName(req.params.name,function(data,err){
+      if(err) {
+        return next(err);
+      }
+      else{
+      	resp.json(data);
+      }
+    });
+  });
+
 
 apiRoutes.post('/projects/add',function(req,resp,next){
 	console.log('Project object are ' + JSON.stringify(req.body));

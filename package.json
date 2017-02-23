@@ -94,6 +94,7 @@
     "q": "^1.4.1",
     "react": "^15.4.2",
     "react-addons-test-utils": "15.4.2",
+    "react-autosuggest": "^8.0.1",
     "react-bootstrap": "^0.30.0",
     "react-datepicker": "^0.41.1",
     "react-dom": "^15.4.2",

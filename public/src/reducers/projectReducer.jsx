@@ -1,10 +1,12 @@
 import { FETCH_PROJECT,FETCH_PROJECT_SUCCESS,FETCH_PROJECT_FAILURE,RESETS_PROJECT,CREATE_PROJECT,CREATE_PROJECT_SUCCESS,
-  CREATE_PROJECT_FAILURE, RESET_NEW_PROJECT , VALIDATE_PROJECT_FIELDS, VALIDATE_PROJECT_FIELDS_SUCCESS,  VALIDATE_PROJECT_FIELDS_FAILURE , RESET_PROJECT_FIELDS
+  CREATE_PROJECT_FAILURE, RESET_NEW_PROJECT , VALIDATE_PROJECT_FIELDS, VALIDATE_PROJECT_FIELDS_SUCCESS,  VALIDATE_PROJECT_FIELDS_FAILURE , RESET_PROJECT_FIELDS ,
+  FECTH_SUGGEST_PROJECT , FECTH_SUGGEST_PROJECT_SUCCESS , FECTH_SUGGEST_PROJECT_FAILURE
 } from '.././actions/project.jsx'
 
 const INITIAL_STATE={
-  projectList:{projects:[],error:null,loading:false},
-  newProject:{project:null,erroe:null,loading:false}
+  projectList:{ projects:[],error:null,loading:false },
+  newProject:{ project:null,error:null,loading:false },
+  suggestList:{ projects:[],error:null,loading:false}
 }
 
 export default function (state=INITIAL_STATE,action) {
@@ -20,6 +22,16 @@ export default function (state=INITIAL_STATE,action) {
     case FETCH_PROJECT_FAILURE:
       error = action.payload || {message: action.payload.message};
       return{...state,projectList:{projects:[],error:error,loading:false}};
+
+    case FECTH_SUGGEST_PROJECT:
+      return{...state,suggestList:{ projects:[],error:null,loading:true}};
+
+    case FECTH_SUGGEST_PROJECT_SUCCESS:
+      return{...state,suggestList:{ projects:action.payload,error:null,loading:false}};
+
+    case FECTH_SUGGEST_PROJECT_FAILURE:
+      error = action.payload || {message: action.payload.message};
+      return{...state,suggestList:{ projects:null,error:error,loading:false}};
 
     case RESETS_PROJECT:
       return {projects:[],error:null,loading:false};

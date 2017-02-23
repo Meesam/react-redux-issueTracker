@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {fetchProjectType,fetchProjectTypeSuccess,fetchProjectTypeFailure} from '.././actions/project.jsx';
-import SelectOption from '.././components/renderSelectOption.jsx';
+import AddProject from '.././components/addProjectForm.jsx';
 
 const mapStateToProps=(state)=>{
   return{
@@ -18,4 +18,4 @@ const mapDispatchToProps=(dispatch)=>{
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectOption);
+export default connect(mapStateToProps, mapDispatchToProps)(AddProject);

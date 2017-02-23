@@ -66,6 +66,23 @@ exports.getProjectById=function(projectId,callback){
 		});
 	}
 };
+
+  exports.getProjectByName=function(name,callback){
+  	Projects.find({'ProjectName':new RegExp(name,'i') },function(err,data){
+			if(err)
+				callback(null,err);
+			else{
+				let	obj = {
+					status: 'success',
+					count:data.length,
+					data: data
+				};
+				callback(globalobj.globalObject(obj));
+			}
+		});
+  };
+
+
 })();
 
 

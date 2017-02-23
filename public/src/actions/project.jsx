@@ -24,6 +24,12 @@ export const FETCH_PROJECTTYPE="FETCH_PROJECTTYPE";
 export const FETCH_PROJECTTYPE_SUCCESS="FETCH_PROJECTTYPE_SUCCESS";
 export const FETCH_PROJECTTYPE_FAILURE="FETCH_PROJECTTYPE_FAILURE";
 
+// Sugges Project List
+export const FECTH_SUGGEST_PROJECT="FECTH_SUGGEST_PROJECT";
+export const FECTH_SUGGEST_PROJECT_SUCCESS="FECTH_SUGGEST_PROJECT_SUCCESS";
+export const FECTH_SUGGEST_PROJECT_FAILURE="FECTH_SUGGEST_PROJECT_FAILURE";
+
+
 
 export function fetchProject() {
   const request=axios({
@@ -50,6 +56,33 @@ export function fetchProjectFailure(error) {
     payload:error
   }
 }
+
+export function fetchSuggestProject(name){
+  const request=axios({
+    url:`${URL.ROOT_URL}/suggestprojects/${name}`,
+    method:'GET',
+    Headers:[]
+  });
+  return{
+    type:FECTH_SUGGEST_PROJECT,
+    payload:request
+  }
+}
+
+export function fectchSuggestProjectSuccess(projects) {
+  return{
+    type:FECTH_SUGGEST_PROJECT_SUCCESS,
+    payload:projects
+  }
+}
+
+export function fectchSuggestProjectFailure(error) {
+  return{
+    type:FECTH_SUGGEST_PROJECT_FAILURE,
+    payload:error
+  }
+}
+
 
 export function fetchProjectType(){
   const request=axios({

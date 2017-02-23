@@ -1,11 +1,13 @@
 import rootReducer from '.././reducers/index.jsx';
 import { createStore, applyMiddleware, compose } from 'redux';
 import promise from 'redux-promise';
+import thunk from 'redux-thunk';
+import logger from "redux-logger";
 
 
 export default function configureStore(initialState) {
   const finalCreateStore = compose(
-    applyMiddleware(promise),
+    applyMiddleware(promise,thunk,logger()),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )(createStore);
 

@@ -5,8 +5,7 @@ import renderField from './renderField.jsx';
 import renderTextArea from './renderTextArea.jsx';
 import renderDatePicker from './renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
-import { createProject, createProjectSuccess, createProjectFailure, resetNewProject , fetchProjectType} from '../actions/project.jsx';
-import SelectOption from '.././pages/projectType.jsx';
+import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
 
 //Client side validation
 function validate(values) {
@@ -49,8 +48,6 @@ const asyncValidate = (values, dispatch) => {
 
 //For any field errors upon submission (i.e. not instant check)
 const validateAndCreateProject = (values, dispatch) => {
-  console.log('submit values are' + JSON.stringify(values));
-
   return dispatch(createProject(values))
     .then(result => {
       // Note: Error's "data" is in result.payload.response.data (inside "response")
@@ -75,9 +72,14 @@ class AddProject extends Component{
   };
 
   componentWillMount() {
-    //Important! If your component is navigating based on some global state(from say componentWillReceiveProps)
-    //always reset that global state back to null when you REMOUNT
     this.props.resetMe();
+    this.props.fetchProjectType();
+  }
+
+  projectByName(event){
+    if(event.target.value.length >= 3){
+      this.props.fetchSuggestProject(event.target.value);
+    }
   }
 
 
@@ -118,13 +120,15 @@ class AddProject extends Component{
   renderProjectTypeOptions(projectTypes){
     return projectTypes.map((item)=>{
       return(
-      <option key={item._id} value={item.Title}>{item.Title}</option>
+         <option key={item._id} value={item.Title}>{item.Title}</option>
       )
     })
   }
 
   render(){
     const {handleSubmit, submitting, newProject} = this.props;
+    const { projectTypes,error,loading } = this.props.projectTypeList;
+
     return(
       <div>
         { this.renderError(newProject) }
@@ -145,7 +149,7 @@ class AddProject extends Component{
                       name="ProjectName"
                       type="text"
                       component={ renderField }
-                      label="Project Name" />
+                      label="Project Name" onChange={this.projectByName.bind(this)} />
                   </div>
                   <div className="col-sm-3">
                     <Field
@@ -164,7 +168,10 @@ class AddProject extends Component{
                   <div className="col-sm-3">
                     <label>Project Type</label>
                     <div>
-                      <SelectOption />
+                      <Field name="ProjectType" className="form-control" component="select">
+                        <option>Select..</option>
+                        {this.renderProjectTypeOptions(projectTypes)}
+                      </Field>
                     </div>
                   </div>
                   <div className="col-sm-6">
