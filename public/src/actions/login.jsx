@@ -2,14 +2,19 @@ import axios from 'axios';
 import URL from '../../../appconfig';
 
 //Login
-
 export const ON_LOGIN="ON_LOGIN";
 export const ON_LOGIN_SUCCESS="ON_LOGIN_SUCCESS";
 export const ON_LOGIN_FAILURE="ON_LOGIN_FAILURE";
 export const RESET_LOGIN="RESET_LOGIN";
 
 export function onLogin(formValues) {
-	const request = axios.post(`${URL}/users/signin`, formValues);
+	//const request = axios.post(`${URL}/login`, formValues);
+  const request = axios({
+    method: 'post',
+    data: formValues,
+    url: `${URL.ROOT_URL}/login`,
+    headers: []
+  });
 	return {
     type: ON_LOGIN,
     payload: request

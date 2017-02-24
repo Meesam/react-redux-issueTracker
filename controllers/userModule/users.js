@@ -9,18 +9,6 @@ let mongoose=require('mongoose');
 let Users = mongoose.model('Users');
 let UsersDetails=mongoose.model('UsersDetails');
 
-/*
-let Schema=mongoose.Schema;
-mongoose.connect(appconfig.dbUrl);
-let db=mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", function(callback) {
-	console.log("Connection succeeded.");
-});
-*/
-
-
-
 // Add User
 exports.createUsers=function(users,callback){
   if(users){
@@ -45,12 +33,11 @@ exports.createUsers=function(users,callback){
 exports.doLogin=function(users,callback){
 	let obj;
 	if(users != null){
-	  Users.find({usersName:users.usersName,Password:users.Password},function(err,data){
+	  Users.find({usersName:users.usersName,Password:users.password},function(err,data){
 		 if(err)
 		  callback(null,err);
 		  else{
-			 console.log('data is ' + data.length);
-              if(data.length != 0) {
+		  	if(data.length != 0) {
 				   obj={
 					  status:'success',
 					  count:data.length,

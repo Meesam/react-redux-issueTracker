@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import renderField from './renderField.jsx';
 import { onLogin, onLoginSuccess, onLoginFailure, resetLogin } from '../actions/login.jsx';
+import '../../styles/css/signin.css';
 
 //Client side validation
 function validate(values) {
@@ -21,21 +22,21 @@ function validate(values) {
 
 //For any field errors upon submission (i.e. not instant check)
 const validateAndSignInUser = (values, dispatch) => {
+  console.log('values are ' + JSON.stringify(values));
   return dispatch(onLogin(values))
     .then((result) => {
-      // Note: Error's "data" is in result.payload.response.data (inside "response")
+    // Note: Error's "data" is in result.payload.response.data (inside "response")
       // success's "data" is in result.payload.data
       if (result.payload.response && result.payload.response.status !== 200) {
         dispatch(onLoginFailure(result.payload.response.data));
         throw new SubmissionError(result.payload.response.data);
       }
-
       //Store JWT Token to browser session storage 
       //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
       //sessionStorage = persisted only in current tab
       sessionStorage.setItem('jwtToken', result.payload.data.token);
       //let other components know that everything is fine by updating the redux` state
-      dispatch(onLoginSuccess(result.payload.data)); //ps: this is same as dispatching RESET_USER_FIELDS
+      dispatch(onLoginSuccess(result.payload.data.objdata)); //ps: this is same as dispatching RESET_USER_FIELDS
     });
 };
 
@@ -53,9 +54,12 @@ class SignInForm extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user.status === 'authenticated' && nextProps.user.user && !nextProps.user.error) {
+    /*if (nextProps.user.status === 'authenticated' && nextProps.user.user && !nextProps.user.error) {
       this.context.router.push('/');
-    }
+    }*/
+    if (nextProps.user.status === 'authenticated' && !nextProps.user.error) {
+      this.context.router.push('/project');
+     }
 
     //error
     //Throw error if it was not already thrown (check this.props.user.error to see if alert was already shown)
@@ -68,28 +72,33 @@ class SignInForm extends Component {
   render() {
     const {asyncValidating, handleSubmit, submitting} = this.props;
     return (
-      <div className="container">
-        <form onSubmit={ handleSubmit(validateAndSignInUser) }>
+      <div>
+        <form className="form-signin" onSubmit={ handleSubmit(validateAndSignInUser) }>
+          <h2 class="form-signin-heading">Please sign in</h2>
           <Field
                  name="username"
                  type="text"
+                 className="form-control"
+                 placeholder="User Name"
                  component={ renderField }
                  label="@username*" />
           <Field
                  name="password"
                  type="password"
+                 className="form-control"
+                 placeholder="Password"
                  component={ renderField }
                  label="Password*" />
           <div>
-            <button
+             <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-lg btn-primary btn-block"
                     disabled={ submitting }>
               Submit
             </button>
             <Link
                   to="/"
-                  className="btn btn-error"> Cancel
+                  className="btn btn-lg btn-danger btn-block"> Cancel
             </Link>
           </div>
         </form>

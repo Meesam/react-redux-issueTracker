@@ -9,17 +9,21 @@ let Logger=require('../core/Logger');
 
 apiRoutes.post('/login',function(req,resp,next){
     let users=req.body;
+    console.log('body are ' + JSON.stringify(req.body));
+
 	if(users){
-       usersModule.doLogin(users,function(data,err){
-           if(err){
-           	  return next(err);
-           }
-           else{
-              if(data.Status=='loginfail')
-              	return next(new Error('Login Fail'));
-               resp.json(data);
-           }
-       });
+     usersModule.doLogin(users,function(data,err){
+       if(err){
+          return next(err);
+       }
+       else{
+          console.log('data are ' + JSON.stringify(data));
+
+          if(data.Status=='loginfail')
+            return next(new Error('Login Fail'));
+           resp.json(data);
+       }
+     });
 	}
 });
 
