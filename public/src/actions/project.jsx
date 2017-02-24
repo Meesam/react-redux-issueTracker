@@ -29,8 +29,6 @@ export const FECTH_SUGGEST_PROJECT="FECTH_SUGGEST_PROJECT";
 export const FECTH_SUGGEST_PROJECT_SUCCESS="FECTH_SUGGEST_PROJECT_SUCCESS";
 export const FECTH_SUGGEST_PROJECT_FAILURE="FECTH_SUGGEST_PROJECT_FAILURE";
 
-
-
 export function fetchProject() {
   const request=axios({
     url:`${URL.ROOT_URL}/project`,

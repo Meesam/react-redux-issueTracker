@@ -10,7 +10,7 @@ export default function(state = INITIAL_STATE, action) {
     return { ...state, user: null, status:'signin', error:null, loading: true};
 
     case ON_LOGIN_SUCCESS:
-    return { ...state, user: action.payload.user, status:'authenticated', error:null, loading: false}; //<-- authenticated
+    return { ...state, user: action.payload.user, status:'authenticated', error:null, loading: false};
 
     case ON_LOGIN_FAILURE:
     error = action.payload.data || {message: action.payload.message};      
