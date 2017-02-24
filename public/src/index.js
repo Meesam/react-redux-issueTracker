@@ -21,8 +21,12 @@ import '../styles/css/skins/skin-blue.min.css';
 window.React = React;
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store)
+const history = syncHistoryWithStore(browserHistory, store);
 
+Router.run(routes, function (Handler) {
+  doSomethingAnalytics(document.location.hash);
+  React.render(<Handler/>, document.body.querySelector('#content'));
+});
 
 render(
     <Provider store={store}>

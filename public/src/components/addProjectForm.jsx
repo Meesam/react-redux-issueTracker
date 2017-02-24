@@ -6,6 +6,8 @@ import renderTextArea from './renderTextArea.jsx';
 import renderDatePicker from './renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
 import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
+import Autosuggest from 'react-autosuggest';
+
 
 //Client side validation
 function validate(values) {

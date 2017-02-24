@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-
 const renderField = ({ input, label, type, meta: { touched, error, invalid, warning } }) => (
   <div className={`form-group ${touched && invalid ? 'has-error' : ''}`}>
     <label  className="control-label">{label}</label>
