@@ -30,9 +30,7 @@ const mapStateToProps=(state)=> {
   return {
     newProject: state.projects.newProject,
     projectTypeList:state.projectTypes.projectTypeList,
-    suggestList:state.projects.suggestList,
-    authenticatedUser: state.user.status === 'authenticated' ? true : false,
-    user: state.user
+    suggestList:state.projects.suggestList
   };
 }
 

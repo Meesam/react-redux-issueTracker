@@ -15,6 +15,7 @@ import AddProjectIndex from  './pages/addProjectIndex.jsx'
 import '!style-loader!css-loader!sass-loader!font-awesome/css/font-awesome.css';
 import '../styles/css/AdminLTE.css';
 import '../styles/css/skins/skin-blue.min.css';
+import Authenticated from './containers/authenticationContainer.jsx';
 
 //for React Developer Tools
 window.React = React;
@@ -25,11 +26,10 @@ render(
     <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component = {Home} />
-        <Route path="/home" component={Home} />
-        <Route path="/login" component={SignIn} />
-        <Route path="/project" component={ProjectIndex} />
-        <Route path="/addproject" component={AddProjectIndex} />
+        <Route path="home" component={Home} />
+        <Route path="login" component={SignIn} />
+        <Route path="project" component={Authenticated(ProjectIndex)} />
+        <Route path="addproject" component={Authenticated(AddProjectIndex)} />
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>

@@ -17,12 +17,6 @@ class ProjectList extends Component{
     this.hidesuccessalert()
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.user.status==null || nextProps.user.status === 'logout' || nextProps.user.status=='undefined' ) {
-      this.context.router.push('/login');
-    }
-  }
-
   hidesuccessalert(){
     $('#success-alert').fadeOut( 3000, function() {
       $( '#success-alert' ).remove();

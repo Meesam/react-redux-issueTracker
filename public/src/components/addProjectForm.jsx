@@ -69,9 +69,6 @@ class AddProject extends Component{
   constructor(props){
     super(props)
   }
-  static contextTypes = {
-    router: PropTypes.object
-  };
 
   componentWillMount() {
     this.props.resetMe();
@@ -89,14 +86,6 @@ class AddProject extends Component{
     $('#success-alert').fadeOut( 3000, function() {
       $( '#success-alert' ).remove();
     });
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    console.log('status ' + nextProps.user.status);
-    if (nextProps.user.status==null || nextProps.user.status === 'logout' || nextProps.user.status=='undefined' ) {
-      this.context.router.push('/login');
-    }
   }
 
   renderError(newProject) {

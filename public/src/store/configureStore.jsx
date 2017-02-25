@@ -7,7 +7,7 @@ import logger from "redux-logger";
 
 export default function configureStore(initialState) {
   const finalCreateStore = compose(
-    applyMiddleware(promise,thunk,logger()),
+    applyMiddleware(promise,thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )(createStore);
 
