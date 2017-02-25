@@ -4,6 +4,8 @@ import ModulesList from '.././components/modulesList.jsx';
 
 const  mapStateToProps=(state)=>{
   return{
+    authenticatedUser: state.user.status === 'authenticated' ? true : false,
+    user: state.user,
     moduleList:state.modules.moduleList
   }
 }

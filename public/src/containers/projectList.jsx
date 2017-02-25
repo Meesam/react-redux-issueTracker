@@ -4,7 +4,9 @@ import ProjectList from '.././components/projectList.jsx';
 
 const mapStateToProps=(state)=>{
   return{
-    projectList:state.projects.projectList
+    projectList:state.projects.projectList,
+    authenticatedUser: state.user.status === 'authenticated' ? true : false,
+    user: state.user,
   }
 }
 

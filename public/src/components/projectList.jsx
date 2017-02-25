@@ -1,10 +1,13 @@
-import React,{ Component } from 'react';
+import React,{ Component , PropTypes} from 'react';
 import { Link } from 'react-router';
 
 class ProjectList extends Component{
   constructor(props){
     super(props)
   }
+  static contextTypes = {
+    router: PropTypes.object
+  };
 
   componentWillMount(){
     this.props.fetchProject();
@@ -12,6 +15,12 @@ class ProjectList extends Component{
 
   componentDidMount(){
     this.hidesuccessalert()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user.status==null || nextProps.user.status === 'logout' || nextProps.user.status=='undefined' ) {
+      this.context.router.push('/login');
+    }
   }
 
   hidesuccessalert(){

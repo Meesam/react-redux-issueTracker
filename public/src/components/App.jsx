@@ -1,15 +1,17 @@
 import React ,{Component} from 'react';
 import { render } from 'react-dom';
 import ModulesList from '.././pages/modulesIndex.jsx';
-import Header from '.././staticComponents/header.jsx';
+import Header from '.././pages/headerIndex.jsx';
 import Footer from '.././staticComponents/footer.jsx'
 
-class App extends Component {
-  constructor(props){
-    super(props)
+export default class App extends Component {
+  componentWillMount() {
+    this.props.loadUserFromToken();
   }
+
   render() {
-    return (  
+    const { type, authenticatedUser } = this.props;
+    return (
       <div>
         <div>
             <Header />
@@ -25,10 +27,8 @@ class App extends Component {
       <div>
          <Footer />
       </div>
-        <div  className="control-sidebar-bg"></div>  
+        <div  className="control-sidebar-bg"></div>
       </div>
     );
   }
 }
-
-export default App;

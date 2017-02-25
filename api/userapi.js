@@ -8,17 +8,13 @@ let apiRoutes = express.Router();
 let Logger=require('../core/Logger');
 
 apiRoutes.post('/login',function(req,resp,next){
-    let users=req.body;
-    console.log('body are ' + JSON.stringify(req.body));
-
+  let users=req.body;
 	if(users){
-     usersModule.doLogin(users,function(data,err){
+    usersModule.doLogin(users,function(data,err){
        if(err){
           return next(err);
        }
        else{
-          console.log('data are ' + JSON.stringify(data));
-
           if(data.Status=='loginfail')
             return next(new Error('Login Fail'));
            resp.json(data);
@@ -29,9 +25,13 @@ apiRoutes.post('/login',function(req,resp,next){
 
 
 apiRoutes.get('/userfromtoken',function(req,resp,next){
-  let token =req.cookies;
-  if(token.UserToken){
-     usersModule.getUserByEmail(token.UserToken,function(data,err){
+  let token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (!token) {
+    return resp.status(401).json({
+      message: 'Must pass token'
+    });
+  } else {
+     usersModule.getUserBytoken(token,function(data,err){
        if(err)
          return next(err);
        else{

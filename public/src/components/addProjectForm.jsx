@@ -93,9 +93,9 @@ class AddProject extends Component{
 
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.newProject.project && !nextProps.newProject.error) {
-      //this.context.router.push('/');
-      //this.props.resetMe();
+    console.log('status ' + nextProps.user.status);
+    if (nextProps.user.status==null || nextProps.user.status === 'logout' || nextProps.user.status=='undefined' ) {
+      this.context.router.push('/login');
     }
   }
 

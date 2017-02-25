@@ -26,11 +26,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps=(state)=> {
   return {
     newProject: state.projects.newProject,
     projectTypeList:state.projectTypes.projectTypeList,
-    suggestList:state.projects.suggestList
+    suggestList:state.projects.suggestList,
+    authenticatedUser: state.user.status === 'authenticated' ? true : false,
+    user: state.user
   };
 }
 

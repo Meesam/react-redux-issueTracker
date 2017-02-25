@@ -7,7 +7,7 @@ import 'bootstrap-loader';
 import NotFoundPage from './staticComponents/NotFoundPage.jsx';
 import configureStore from './store/configureStore.jsx';
 import { syncHistoryWithStore, routerReducer} from 'react-router-redux';
-import App from './components/App.jsx';
+import App from './pages/appIndex.jsx';
 import Home from './components/home.jsx';
 import ProjectIndex from './pages/projectIndex.jsx';
 import SignIn from './pages/loginContainer.jsx';

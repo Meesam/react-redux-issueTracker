@@ -22,21 +22,14 @@ function validate(values) {
 
 //For any field errors upon submission (i.e. not instant check)
 const validateAndSignInUser = (values, dispatch) => {
-  console.log('values are ' + JSON.stringify(values));
   return dispatch(onLogin(values))
     .then((result) => {
-    // Note: Error's "data" is in result.payload.response.data (inside "response")
-      // success's "data" is in result.payload.data
       if (result.payload.response && result.payload.response.status !== 200) {
         dispatch(onLoginFailure(result.payload.response.data));
         throw new SubmissionError(result.payload.response.data);
       }
-      //Store JWT Token to browser session storage 
-      //If you use localStorage instead of sessionStorage, then this w/ persisted across tabs and new windows.
-      //sessionStorage = persisted only in current tab
       sessionStorage.setItem('jwtToken', result.payload.data.token);
-      //let other components know that everything is fine by updating the redux` state
-      dispatch(onLoginSuccess(result.payload.data.objdata)); //ps: this is same as dispatching RESET_USER_FIELDS
+      dispatch(onLoginSuccess(result.payload.data.objdata));
     });
 };
 
