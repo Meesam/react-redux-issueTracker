@@ -28,7 +28,7 @@ const validateAndSignInUser = (values, dispatch) => {
         dispatch(onLoginFailure(result.payload.response.data));
         throw new SubmissionError(result.payload.response.data);
       }
-      sessionStorage.setItem('jwtToken', result.payload.data.token);
+      localStorage.setItem('jwtToken', result.payload.data.token);
       dispatch(onLoginSuccess(result.payload.data.objdata));
     });
 };

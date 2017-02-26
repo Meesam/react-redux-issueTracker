@@ -29,7 +29,7 @@ render(
         <Route path="home" component={Home} />
         <Route path="login" component={SignIn} />
         <Route path="project" component={Authenticated(ProjectIndex)} />
-        <Route path="addproject" component={Authenticated(AddProjectIndex)} />
+        <Route path="addproject" component={AddProjectIndex} />
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>

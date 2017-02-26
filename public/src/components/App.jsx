@@ -6,11 +6,10 @@ import Footer from '.././staticComponents/footer.jsx'
 
 export default class App extends Component {
   componentWillMount() {
-    this.props.loadUserFromToken();
+      this.props.loadUserFromToken();
   }
 
   render() {
-    const { type, authenticatedUser } = this.props;
     return (
       <div>
         <div>

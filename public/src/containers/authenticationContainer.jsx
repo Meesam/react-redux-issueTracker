@@ -8,14 +8,14 @@ export default function (ComposedComponent) {
     }
 
     componentWillMount(){
-      console.log('authentication on will mount ' , this.props.authenticatedUser)
+      console.log('will ', this.props.authenticatedUser);
       if(this.props.authenticatedUser==='logout' ||this.props.authenticatedUser===null){
         this.context.router.push('/login');
       }
     }
 
     componentWillUpdate(nextProps){
-      console.log('authentication on will update ' , this.props.authenticatedUser)
+      console.log('update',this.props.authenticatedUser);
       if(nextProps.authenticatedUser==='logout' ||this.props.authenticatedUser===null){
         this.context.router.push('/login');
       }

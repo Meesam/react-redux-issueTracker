@@ -28,10 +28,10 @@ export default function(state = INITIAL_STATE, action) {
 
     case USER_FROM_TOKEN_FAILURE:
       error = action.payload.data || {message: action.payload.message};
-      return { ...state, user: null, status:'storage', error:error, loading: false};
+      return { ...state, user: null, status:'logout', error:error, loading: false};
 
     case RESET_TOKEN:
-      return { ...state, user: null, status:'storage', error:null, loading: false};
+      return { ...state, user: null, status:'authenticated', error:null, loading: false};
 
     case LOGOUT_USER:
       return {...state, user:null, status:'logout', error:null, loading: false};

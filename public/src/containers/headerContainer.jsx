@@ -13,7 +13,7 @@ const  mapStateToProps=(state)=>{
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     logout: () => {
-      sessionStorage.removeItem('jwtToken');
+      localStorage.removeItem('jwtToken');
       dispatch(logoutUser());
     }
   }

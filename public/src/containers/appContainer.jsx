@@ -6,23 +6,24 @@ import App from '../components/App.jsx';
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUserFromToken: () => {
-      let token = sessionStorage.getItem('jwtToken');
+      let token = localStorage.getItem('jwtToken');
       if(!token || token === '') {
         return;
       }
       dispatch(UserFromToken(token))
         .then((response) => {
           if (!response.error) {
-            sessionStorage.setItem('jwtToken', response.payload.data.token);
+            localStorage.setItem('jwtToken', response.payload.data.token);
             dispatch(UserFromTokenSuccess(response.payload))
           } else {
-            sessionStorage.removeItem('jwtToken');
+            localStorage.removeItem('jwtToken');
             dispatch(UserFromTokenFailure(response.payload));
           }
         });
     },
     resetMe: () =>{
-      sessionStorage.removeItem('jwtToken');
+      console.log('i am call');
+      localStorage.removeItem('jwtToken');
       dispatch(resetToken());
     }
   }
