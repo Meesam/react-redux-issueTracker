@@ -6,6 +6,7 @@ export const ON_LOGIN="ON_LOGIN";
 export const ON_LOGIN_SUCCESS="ON_LOGIN_SUCCESS";
 export const ON_LOGIN_FAILURE="ON_LOGIN_FAILURE";
 export const RESET_LOGIN="RESET_LOGIN";
+export const INVALID_LOGIN="INVALID_LOGIN";
 
 //Get current user from token in localStorage
 export const USER_FROM_TOKEN = 'USER_FROM_TOKEN';
@@ -49,6 +50,13 @@ export function resetLogin() {
   return {
     type: RESET_LOGIN,
   };
+}
+
+export function onInvalidLogin(message) {
+  return{
+    type:INVALID_LOGIN,
+    payload:message
+  }
 }
 
 export function UserFromToken(tokenFromStorage) {

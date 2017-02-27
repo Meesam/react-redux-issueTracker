@@ -3,10 +3,13 @@ import { render } from 'react-dom';
 import ModulesList from '.././pages/modulesIndex.jsx';
 import Header from '.././pages/headerIndex.jsx';
 import Footer from '.././staticComponents/footer.jsx'
+import setAuthorizationToken from '.././utils/setAuthorizationToken';
 
 export default class App extends Component {
+
   componentWillMount() {
-      this.props.loadUserFromToken();
+    this.props.loadUserFromToken();
+    setAuthorizationToken(localStorage.JwtToken);
   }
 
   render() {

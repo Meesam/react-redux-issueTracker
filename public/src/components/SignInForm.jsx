@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import renderField from './renderField.jsx';
-import { onLogin, onLoginSuccess, onLoginFailure, resetLogin } from '../actions/login.jsx';
+import { onLogin, onLoginSuccess, onLoginFailure, resetLogin,onInvalidLogin} from '../actions/login.jsx';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 import '../../styles/css/signin.css';
 
 //Client side validation
@@ -25,11 +26,17 @@ const validateAndSignInUser = (values, dispatch) => {
   return dispatch(onLogin(values))
     .then((result) => {
       if (result.payload.response && result.payload.response.status !== 200) {
-        dispatch(onLoginFailure(result.payload.response.data));
-        throw new SubmissionError(result.payload.response.data);
+        dispatch(onLoginFailure(result.payload.data.objdata));
+        throw new SubmissionError(result.payload.data.objdata);
+
+      } else if(result.payload.data.objdata===null || result.payload.data.Count===0){
+        dispatch(onInvalidLogin("Invalid Login details"));
+
+      } else {
+         localStorage.setItem('jwtToken', result.payload.data.token);
+         setAuthorizationToken(result.payload.data.token);
+         dispatch(onLoginSuccess(result.payload.data.objdata));
       }
-      localStorage.setItem('jwtToken', result.payload.data.token);
-      dispatch(onLoginSuccess(result.payload.data.objdata));
     });
 };
 
@@ -40,32 +47,35 @@ class SignInForm extends Component {
     router: PropTypes.object
   };
 
-  componentWillMount() {
-    //Important! If your component is navigating based on some global state(from say componentWillReceiveProps)
-    //always reset that global state back to null when you REMOUNT
-    //this.props.resetMe();
-  }
-
   componentWillReceiveProps(nextProps) {
-    /*if (nextProps.user.status === 'authenticated' && nextProps.user.user && !nextProps.user.error) {
-      this.context.router.push('/');
-    }*/
     if (nextProps.user.status === 'authenticated' && !nextProps.user.error) {
       this.context.router.push('/project');
      }
+     if (nextProps.user.status === 'invalidLogin') {
+       this.context.router.push('/login');
+     }
+  }
 
-    //error
-    //Throw error if it was not already thrown (check this.props.user.error to see if alert was already shown)
-    //If u dont check this.props.user.error, u may throw error multiple times due to redux-form's validation errors
-    if (nextProps.user.status === 'signin' && !nextProps.user.user && nextProps.user.error && !this.props.user.error) {
-      alert(nextProps.user.error.message);
+  renderInvalidLoginMsg(status){
+    if(status==="invalidLogin"){
+      return(
+        <div id="error-alert" className="alert alert-error alert-dismissable">
+          <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h4>  <i className="icon fa fa-check"></i> Faild!</h4>
+          Invalid UserName or Password !
+        </div>
+      )
+    } else{
+      return(<div></div>)
     }
   }
 
   render() {
     const {asyncValidating, handleSubmit, submitting} = this.props;
+    const {status} = this.props.user;
     return (
       <div>
+        {this.renderInvalidLoginMsg(status)}
         <form className="form-signin" onSubmit={ handleSubmit(validateAndSignInUser) }>
           <h2 class="form-signin-heading">Please sign in</h2>
           <Field

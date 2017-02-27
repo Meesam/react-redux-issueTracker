@@ -55,6 +55,10 @@ entry: './public/src/index.js',
     }),*/
     new webpack.HotModuleReplacementPlugin(),
 
-  ]
+  ],
+  node:{
+    net:'empty',
+    dns:'empty'
+  }
 }
 
