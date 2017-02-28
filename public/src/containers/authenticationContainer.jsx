@@ -8,17 +8,15 @@ export default function (ComposedComponent) {
     }
 
     componentWillMount(){
-     console.log(this.props.authenticatedUser);
       let token = localStorage.getItem('jwtToken');
-      if(this.props.authenticatedUser==='logout' || token==='undefined'){
+      if(this.props.authenticatedUser==='logout' || token==='undefined' || this.props.authenticatedUser===null){
         this.context.router.push('/login');
       }
     }
 
     componentWillUpdate(nextProps){
-      console.log( 'tt ' +nextProps.authenticatedUser);
       let token = localStorage.getItem('jwtToken');
-      if(nextProps.authenticatedUser==='logout' || token==='undefined'){
+      if(nextProps.authenticatedUser==='logout' || token==='undefined' || nextProps.authenticatedUser===null){
         this.context.router.push('/login');
       }
     }
