@@ -20,7 +20,8 @@ class Modules extends Component{
       return module.map((item)=>{
         return(
           <li className="treeview" key={item._id}>
-            <a href={item.MenuRoute}><i className="fa fa-link"></i> <span>{item.MenuName}</span> <i className="fa fa-angle-left pull-right"></i></a>
+           {/* <a href={item.MenuRoute}><i className="fa fa-link"></i> <span>{item.MenuName}</span> <i className="fa fa-angle-left pull-right"></i></a>*/}
+            <Link to={item.MenuRoute}><i className="fa fa-link"></i><span>{item.MenuName}</span><i className="fa fa-angle-left pull-right"></i></Link>
           </li>
         );
       })
@@ -29,7 +30,7 @@ class Modules extends Component{
 
   render(){
     const {modules,error,loading}=this.props.moduleList;
-    const {authenticatedUser}=this.props;
+    const {authenticatedUser,user}=this.props;
 
     if(authenticatedUser) {
       return (
@@ -40,7 +41,7 @@ class Modules extends Component{
                 <img src="styles/img/user2-160x160.jpg" className="img-circle" alt="User Image"/>
               </div>
               <div className="pull-left info">
-                <p>Meesam</p>
+                <p>{user.user.FirstName} {user.user.LastName}</p>
                 <a href="#"><i className="fa fa-circle text-success"></i> Online</a>
               </div>
             </div>

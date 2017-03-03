@@ -32,19 +32,19 @@ exports.addModules=function(modules,callback){
 
 // Get All Modules
 exports.getAllModules=function(callback){
-			Modules.find(function(err,data){
-				if(err)
-					callback(null,err);
-				else{
-					let obj={
-						status:'success',
-						count:data.length,
-						data:data
-					}
-					callback(globalobj.globalObject(obj));
-				}
-			});
-		};
+	Modules.find(function(err,data){
+		if(err)
+			callback(null,err);
+		else{
+			let obj={
+				status:'success',
+				count:data.length,
+				data:data
+			}
+			callback(globalobj.globalObject(obj));
+		}
+	});
+};
 
 
 /*
