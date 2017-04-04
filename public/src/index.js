@@ -31,7 +31,7 @@ render(
         <Route path="home" component={Home} />
         <Route path="login" component={SignIn} />
         <Route path="project" component={Authenticated(ProjectIndex)} />
-        <Route path="addproject" component={Authenticated(AddProjectIndex)} />
+        <Route path="newproject" component={Authenticated(AddProjectIndex)} />
         <Route path="modules" component={Authenticated(AppModuleIndex)} />
         <Route path="*" component={NotFoundPage}/>
       </Route>  

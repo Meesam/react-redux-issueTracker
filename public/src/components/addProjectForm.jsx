@@ -1,12 +1,13 @@
 import React ,{Component , PropTypes} from 'react';
 import { Link } from 'react-router';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
-import renderField from './renderField.jsx';
-import renderTextArea from './renderTextArea.jsx';
-import renderDatePicker from './renderDatePicker.jsx'
+import renderField from '../common/renderField.jsx';
+import renderTextArea from '../common/renderTextArea.jsx';
+import renderDatePicker from '../common/renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
 import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
 import Autosuggest from 'react-autosuggest';
+import PageBase from '../common/renderPageBase.jsx';
 
 
 //Client side validation
@@ -29,21 +30,16 @@ function validate(values) {
 const asyncValidate = (values, dispatch) => {
   return dispatch(validateProjectFields(values))
     .then((result) => {
-      //Note: Error's "data" is in result.payload.response.data
-      // success's "data" is in result.payload.data
-      if (!result.payload.response) { //1st onblur
+      if (!result.payload.response) {
         return;
       }
 
       let {data, status} = result.payload.response;
-      //if status is not 200 or any one of the fields exist, then there is a field error
       if (response.payload.status != 200 || data.title || data.categories || data.description) {
-        //let other components know of error by updating the redux` state
         dispatch(validateProjectFieldsFailure(data));
-        throw data; //throw error
+        throw data;
       } else {
-        //let other components know that everything is fine by updating the redux` state
-        dispatch(validateProjectFieldsSuccess(data)); //ps: this is same as dispatching RESET_USER_FIELDS
+        dispatch(validateProjectFieldsSuccess(data));
       }
     });
 };
@@ -52,14 +48,10 @@ const asyncValidate = (values, dispatch) => {
 const validateAndCreateProject = (values, dispatch) => {
   return dispatch(createProject(values))
     .then(result => {
-      // Note: Error's "data" is in result.payload.response.data (inside "response")
-      // success's "data" is in result.payload.data
-
       if (result.payload.response && result.payload.response.status !== 200) {
         dispatch(createProjectFailure(result.payload.response.data));
         throw new SubmissionError(result.payload.response);
       }
-      //let other components know that everything is fine by updating the redux` state
       dispatch(createProjectSuccess(result.payload.data)); //ps: this is same as dispatching RESET_USER_FIELDS
     });
 }
@@ -119,86 +111,60 @@ class AddProject extends Component{
   render(){
     const {handleSubmit, submitting, newProject} = this.props;
     const { projectTypes,error,loading } = this.props.projectTypeList;
-
     return(
-      <div>
-        { this.renderError(newProject) }
-        {this.hidesuccessalert()}
-        <section className="content-header">
-          <h1>
-            Add Project
-          </h1>
-        </section>
-        <div className="row">
-          <div className="col-xs-9">
-            <div className="box">
-              <form onSubmit={ handleSubmit(validateAndCreateProject) }>
-              <div className="box-body">
-                <div className="row">
-                  <div className="col-sm-3">
-                    <Field
-                      name="ProjectName"
-                      type="text"
-                      component={ renderField }
-                      label="Project Name" onChange={this.projectByName.bind(this)} />
-                  </div>
-                  <div className="col-sm-3">
-                    <Field
-                      name="StartDate"
-                      type="text"
-                      component={ renderDatePicker }
-                      label="Start Date" />
-                  </div>
-                  <div className="col-sm-3">
-                    <Field
-                      name="EndDate"
-                      type="text"
-                      component={ renderDatePicker }
-                      label="End Date" />
-                  </div>
-                  <div className="col-sm-3">
-                    <label>Project Type</label>
-                    <div>
-                      <Field name="ProjectType" className="form-control" component="select">
-                        <option>Select..</option>
-                        {this.renderProjectTypeOptions(projectTypes)}
-                      </Field>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <Field
-                      name="Description"
-                      type="text"
-                      component={ renderTextArea }
-                      label="Project Description" />
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-1">
-                    <br />
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      disabled={ submitting }>
-                      Submit
-                    </button>
-                  </div>
-                  <div class="col-sm-1">
-                    <br />
-                    <Link
-                      to="/project"
-                      className="btn btn-primary"> Cancel
-                    </Link>
-                  </div>
-
-                </div>
-              </div>
-              </form>
+      <PageBase title="Add Project">
+        <form onSubmit={ handleSubmit(validateAndCreateProject) }>
+          <div className="form-group">
+            <Field
+              name="ProjectName"
+              type="text"
+              component={ renderField }
+              label="Project Name" onChange={this.projectByName.bind(this)} />
+          </div>
+          <div className="form-group">
+            <Field
+              name="StartDate"
+              type="text"
+              component={ renderDatePicker }
+              label="Start Date" />
+          </div>
+          <div className="form-group">
+            <Field
+              name="EndDate"
+              type="text"
+              component={ renderDatePicker }
+              label="End Date" />
+          </div>
+          <div className="form-group">
+            <label>Project Type</label>
+            <div>
+              <Field name="ProjectType" className="form-control" component="select">
+                <option>Select..</option>
+                {this.renderProjectTypeOptions(projectTypes)}
+              </Field>
             </div>
           </div>
-        </div>
-      </div>
+          <div className="form-group">
+            <Field
+              name="Description"
+              type="text"
+              component={ renderTextArea }
+              label="Project Description" />
+          </div>
+              <div className="form-group-inline">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={ submitting }>
+                  Submit
+                </button>
+                <Link
+                  to="/project"
+                  className="btn btn-default"> Cancel
+                </Link>
+              </div>
+        </form>
+      </PageBase>
     )
   }
 }

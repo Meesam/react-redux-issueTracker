@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
-import renderField from './renderField.jsx';
+import renderField from '../common/renderField.jsx';
 import { onLogin, onLoginSuccess, onLoginFailure, resetLogin,onInvalidLogin} from '../actions/login.jsx';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 import '../../styles/css/signin.css';

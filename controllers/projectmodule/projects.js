@@ -7,30 +7,71 @@ let util=require('util');
 let mongoose=require('mongoose');
 let Projects = mongoose.model('Projects');
 
-exports.getAllProject=function(aTableInfo,callback){
-	console.log('TableInfo are ' +  JSON.stringify(aTableInfo));
+	exports.getAllProject=function(aTableInfo,callback){
+		console.log('aTableInfo ' +  JSON.stringify(aTableInfo));
+		let totalRecord=null;
+		let perPage = aTableInfo.RPP
+		 , page = Math.max(0, aTableInfo.CurPage);
+		Projects.count({},function(err,data){
+			if(err)
+			totalRecord=0;
+			else
+				totalRecord=data;
+		});
+		Projects.find(function(err,data){
+			if(err)
+				callback(null,err);
+			else {
+			let	obj = {
+					 status: 'success',
+						data: data
+				};
+				callback(globalobj.globalObject(obj));
+			}
+		}).skip(perPage * (page-1)).limit(perPage).sort('ProjectName');;
+	};
 
-	let totalRecord=null;
-	let perPage = aTableInfo.RPP
-	 , page = Math.max(0, aTableInfo.CurPage);
-	Projects.count({},function(err,data){
-		if(err)
-		totalRecord=0;
-		else
-			totalRecord=data;
-	});
-	Projects.find(function(err,data){
-		if(err)
-			callback(null,err);
-		else {
-		let	obj = {
-				 status: 'success',
-			    data: data
-			};
-			callback(globalobj.globalObject(obj));
+
+  exports.getSearchProject=function(aTableInfo,callback){
+    console.log('aTableInfo ' +  JSON.stringify(aTableInfo));
+    let totalRecord=null;
+    let perPage = aTableInfo.RPP
+      , page = Math.max(0, aTableInfo.CurPage);
+    let mongoqueryfilter;
+    if(aTableInfo.ProjectName){
+
+    	mongoqueryfilter={'ProjectName' : new RegExp(aTableInfo.ProjectName, 'i')}
+
+		} else if(aTableInfo.ProjectType){
+
+    	mongoqueryfilter={'ProjectType' : aTableInfo.ProjectType}
+
+		} else if(aTableInfo.ProjectName && aTableInfo.ProjectType){
+
+			mongoqueryfilter={'ProjectName' : new RegExp(aTableInfo.ProjectName, 'i'),'ProjectType':aTableInfo.ProjectType};
+		} else {
+      mongoqueryfilter={};
 		}
-	}).skip(perPage * (page-1)).limit(perPage).sort('ProjectName');;
-};
+
+    //let mongoqueryfilter={'ProjectName' : new RegExp(aTableInfo.ProjectName, 'i'),'ProjectType':aTableInfo.ProjectType};
+    Projects.count(mongoqueryfilter,function(err,data){
+      if(err)
+        totalRecord=0;
+      else
+        totalRecord=data;
+    });
+    Projects.find(mongoqueryfilter,function(err,data){
+      if(err)
+        callback(null,err);
+      else {
+        let	obj = {
+          status: 'success',
+          data: data
+        };
+        callback(globalobj.globalObject(obj));
+      }
+    }).skip(perPage * (page-1)).limit(perPage).sort('ProjectName');
+  };
 
 exports.addProject=function(projectdetails,callback){
   let project=new Projects(projectdetails);
@@ -49,6 +90,7 @@ exports.addProject=function(projectdetails,callback){
 };
 
 exports.getProjectById=function(projectId,callback){
+
 	if(projectId==0)
 		callback(null,err);
 	else{
@@ -67,23 +109,41 @@ exports.getProjectById=function(projectId,callback){
 	}
 };
 
-  exports.getProjectByName=function(name,callback){
-  	Projects.find({'ProjectName':new RegExp(name,'i') },function(err,data){
-			if(err)
-				callback(null,err);
-			else{
-				let	obj = {
-					status: 'success',
-					count:data.length,
-					data: data
-				};
-				callback(globalobj.globalObject(obj));
-			}
-		});
+exports.getProjectByName=function(name,callback){
+	Projects.find({'ProjectName':new RegExp(name,'i') },function(err,data){
+		if(err)
+			callback(null,err);
+		else{
+			let	obj = {
+				status: 'success',
+				count:data.length,
+				data: data
+			};
+			callback(globalobj.globalObject(obj));
+		}
+	});
+};
+
+  //checkProjectByName
+
+  exports.checkProjectByName=function(name,callback){
+    Projects.find({'ProjectName':name },function(err,data){
+      if(err)
+        callback(null,err);
+      else{
+        let	obj = {
+          status: 'success',
+          count:data.length,
+          data: data
+        };
+        callback(globalobj.globalObject(obj));
+      }
+    });
   };
 
 
 })();
+
 
 
 /*
@@ -141,9 +201,9 @@ exports.getProjectById=function(projectid,callback){
 		        let obj={
 					status:'success',
 					count:data.length,
-					data:data	
+					data:data
 				}
-				callback(globalobj.globalObject(obj));		
+				callback(globalobj.globalObject(obj));
 			}
 		})
 	}
