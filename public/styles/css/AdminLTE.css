@@ -4731,5 +4731,38 @@ table.text-center th {
     background-color: #000 !important;
   }
 
+  .profile {
+    min-height: 200px;
+    display: inline-block;
+  }
+  .well{
+    background-color: #ffffff !important;
+  }
+
+  .divider
+  {
+    border-top:1px solid rgba(0,0,0,0.1);
+  }
+  .emphasis
+  {
+    border-top: 4px solid transparent;
+  }
+  .emphasis:hover
+  {
+    border-top: 4px solid #1abc9c;
+  }
+  .emphasis h2
+  {
+    margin-bottom:0;
+  }
+
+  .custom{background:#fff; height:200px; padding:16px}
+
+  .text{
+    margin-left: 60px;
+    overflow: hidden;
+  }
+
+  .cust-margin{margin-top:4px;margin-bottom:4px}
 
 }

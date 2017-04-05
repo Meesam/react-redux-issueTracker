@@ -42,6 +42,8 @@ app.use(function(req, res, next) {
   next();
 });
 
+
+// token middleware
 app.use('/api', apiRoutes);
 
 //user routing middleware

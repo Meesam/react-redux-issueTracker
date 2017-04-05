@@ -5,15 +5,13 @@ import renderField from '../common/renderField.jsx';
 import renderTextArea from '../common/renderTextArea.jsx';
 import renderDatePicker from '../common/renderDatePicker.jsx'
 import { validateProjectFields, validateProjectFieldsSuccess, validateProjectFieldsFailure } from '../actions/project.jsx';
-import { createProject, createProjectSuccess, createProjectFailure, resetNewProject } from '../actions/project.jsx';
-import Autosuggest from 'react-autosuggest';
+import { addProject, addProjectSuccess, addProjectFailue } from '../actions/project.jsx';
 import PageBase from '../common/renderPageBase.jsx';
 
 
 //Client side validation
 function validate(values) {
   const errors = {};
-
   if (!values.ProjectName || values.ProjectName.trim() === '') {
     errors.ProjectName = 'Enter a Project Name';
   }
@@ -44,15 +42,15 @@ const asyncValidate = (values, dispatch) => {
     });
 };
 
-//For any field errors upon submission (i.e. not instant check)
+
 const validateAndCreateProject = (values, dispatch) => {
-  return dispatch(createProject(values))
+  return dispatch(addProject(values))
     .then(result => {
       if (result.payload.response && result.payload.response.status !== 200) {
-        dispatch(createProjectFailure(result.payload.response.data));
+        dispatch(addProjectFailue(result.payload.response.data));
         throw new SubmissionError(result.payload.response);
       }
-      dispatch(createProjectSuccess(result.payload.data)); //ps: this is same as dispatching RESET_USER_FIELDS
+      dispatch(addProjectSuccess(result.payload.data));
     });
 }
 
@@ -63,16 +61,9 @@ class AddProject extends Component{
   }
 
   componentWillMount() {
-    this.props.resetMe();
+    //this.props.resetMe();
     this.props.fetchProjectType();
   }
-
-  projectByName(event){
-    if(event.target.value.length >= 3){
-      this.props.fetchSuggestProject(event.target.value);
-    }
-  }
-
 
   hidesuccessalert(){
     $('#success-alert').fadeOut( 3000, function() {
@@ -119,7 +110,7 @@ class AddProject extends Component{
               name="ProjectName"
               type="text"
               component={ renderField }
-              label="Project Name" onChange={this.projectByName.bind(this)} />
+              label="Project Name" />
           </div>
           <div className="form-group">
             <Field

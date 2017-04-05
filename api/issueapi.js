@@ -8,14 +8,13 @@
 
 // Get all issues list
   apiRoutes.post('/issues',function (req,resp,next) {
-    issues.getAllIssues(req.body,function(data,err){
-      if(err) {
-        return next(err);
-      }
-      else {
-        resp.json(data);
-      }
-    });
+    issues.getAllIssues(req.body)
+      .then(function (response) {
+        resp.json(response);
+      })
+      .catch(function (error) {
+        return next(error);
+      })
   });
 
   // Add Issues

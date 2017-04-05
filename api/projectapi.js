@@ -10,14 +10,13 @@ let logger=require('../core/Logger');
 
 // Get all project list
   apiRoutes.post('/project',function (req,resp,next) {
-    projects.getAllProject(req.body,function(data,err){
-      if(err) {
-        return next(err);
-      }
-      else {
-        resp.json(data);
-      }
-    });
+    projects.getAllProject(req.body)
+      .then(function (response) {
+        resp.json(response);
+     })
+      .catch(function (error) {
+        return next(error);
+     })
   });
 
   // Project Search
@@ -71,15 +70,13 @@ apiRoutes.get('/suggestprojects/:name',function(req,resp,next){
 
 
 apiRoutes.post('/projects/add',function(req,resp,next){
-	console.log('Project object are ' + JSON.stringify(req.body));
-	projects.addProject(req.body,function(data,err){
-		if(err) {
-			return next(err);
-		}
-		else {
-			resp.json(data);
-		}
-	});
+	projects.addProject(req.body)
+    .then(function (result) {
+       resp.json(result);
+    })
+    .catch(function (err) {
+      return next(err);
+    })
 });
 
 module.exports = apiRoutes;

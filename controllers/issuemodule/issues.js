@@ -7,26 +7,21 @@ const execPromise=require('../../core/execPromise');
 
 
 function getAllIssues(aTableInfo,callback){
-  let totalRecord=null;
   let perPage = aTableInfo.RPP
     , page = Math.max(0, aTableInfo.CurPage);
-  Issues.count({},function(err,data){
-    if(err)
-      totalRecord=0;
-    else
-      totalRecord=data;
-  });
-  Issues.find(function(err,data){
-    if(err)
-      callback(null,err);
-    else {
-      let	obj = {
-        status: 'success',
-        data: data
-      };
-      callback(globalobj.globalObject(obj));
-    }
-  }).skip(perPage * (page-1)).limit(perPage).sort('IssueTitle');
+  return Q(Issues.count().exec())
+    .then(function (count) {
+      return Q(Issues.find().sort(aTableInfo.SortBy).skip(perPage * (page-1)).limit(perPage).exec())
+        .then(function(project) {
+          return result={
+            totalRecord:count,
+            data:project
+          }
+        })
+    })
+    .catch(function (error) {
+      return error;
+    })
 };
 
 
