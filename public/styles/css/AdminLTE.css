@@ -4727,5 +4727,9 @@ table.text-center th {
     white-space: normal!important;
   }
 
+  .hr{
+    background-color: #000 !important;
+  }
+
 
 }
