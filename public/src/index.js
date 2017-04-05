@@ -17,6 +17,7 @@ import '../styles/css/AdminLTE.css';
 import '../styles/css/skins/skin-blue.min.css';
 import Authenticated from './containers/authenticationContainer.jsx';
 import AppModuleIndex from  './pages/appModulesIndex.jsx';
+import IssueIndex from './pages/issueIndex.jsx';
 
 //for React Developer Tools
 window.React = React;
@@ -33,6 +34,7 @@ render(
         <Route path="project" component={Authenticated(ProjectIndex)} />
         <Route path="newproject" component={Authenticated(AddProjectIndex)} />
         <Route path="modules" component={Authenticated(AppModuleIndex)} />
+        <Route path="issues" components={IssueIndex}></Route>
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {fetchIssues,fetchIssuesSuccess,fetchIssuesFailure,fetchIssueById,fetchIssueByIdSuccess,fetchIssueByIdFailure} from '.././actions/issues.jsx';
-import IssueList from '.././components/IssueList.jsx';
+import IssueList from '.././components/issueList.jsx';
 
 const mapStateToProps=(state)=>{
   return{
@@ -13,7 +13,7 @@ const mapDispatchToProps=(dispatch)=>{
   return{
     fetchIssues:(pageInfo)=>{
       dispatch(fetchIssues(pageInfo)).then((response)=>{
-        dispatch(fetchIssuesSuccess(response.value.data.objdata,pageInfo.CurPage));
+        dispatch(fetchIssuesSuccess(response.payload.data.data,pageInfo.CurPage));
       })
       .catch((error)=>{
         dispatch(fetchIssuesFailure(error));

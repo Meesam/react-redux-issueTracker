@@ -1,4 +1,5 @@
 import React,{Component,PropTypes} from 'react';
+import {Link} from 'react-router';
 import moment from 'moment';
 
 
@@ -13,9 +14,7 @@ class ProjectList extends Component{
   }
 
   renderIcons(projectType){
-    console.log('projectType', projectType)
     switch (projectType){
-
       case "Internal":
         return (
           <i class="fa fa-bookmark" aria-hidden="true"></i>
@@ -30,37 +29,24 @@ class ProjectList extends Component{
   renderProject(project){
     return project.map((item)=>{
       return(
-        <div class="container-fluid" key={item._id}>
-          <div class="row">
-            <div class="col-md-8 col-lg-6 col-lg-8">
-              <div class="well profile">
-                <div class="col-sm-12">
-                  <div class="col-xs-12 col-sm-8">
-                    <h3>{this.renderIcons(item.ProjectType)} {item.ProjectName}</h3>
-                    <p><strong>Project Type: </strong>{item.ProjectType}</p>
-                    <p><strong>Start Date: </strong>{item.StartDate}</p>
-                    <p><strong>End Date: </strong>
-                      {item.EndDate}
-                    </p>
-                    <p>
-                      <strong>Description: </strong>
-                      {item.Description}
-                    </p>
-                  </div>
-                </div>
-                <div className="col-xs-12 divider text-center">
-                  <div class="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 8 </strong></h2>
-                    <p><small>Issues</small></p>
-                    <button class="btn btn-success"><span class="fa fa-plus-circle"></span> Add Issue </button>
-                  </div>
-                  <div class="col-xs-12 col-sm-4">
-                    <h2><strong>5</strong></h2>
-                    <p><small>User</small></p>
-                    <button class="btn btn-info"><span class="fa fa-user"></span> Add User </button>
-                  </div>
-                </div>
-                <div className="clearfix"></div>
+        <div className="row" key={item._id}>
+          <div className="col-md-12">
+            <div className="box box-solid">
+              <div className="box-header with-border">
+                {this.renderIcons(item.ProjectType)}
+                <Link to="/newproject" ><h3 className="box-title">{item.ProjectName}</h3></Link>
+              </div>
+              <div className="box-body">
+                <dl>
+                  <dt>Project Type</dt>
+                  <dd>{item.ProjectType}</dd>
+                  <dt>Start Date</dt>
+                  <dd>{item.StartDate}</dd>
+                  <dt>End Date</dt>
+                  <dd>{item.EndDate}</dd>
+                  <dt>Description</dt>
+                  <dd>{item.Description}</dd>
+                </dl>
               </div>
             </div>
           </div>

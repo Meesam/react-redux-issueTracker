@@ -2,6 +2,10 @@ import React,{ Component , PropTypes} from 'react';
 import PageBase from '../common/renderPageBase.jsx';
 import Projects from './projectListComponent.jsx';
 import Pagination from '../common/renderPagination.jsx';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
+import renderField from '../common/renderField.jsx';
+import renderTextArea from '../common/renderTextArea.jsx';
+import renderDatePicker from '../common/renderDatePicker.jsx'
 
 const aTableInfo={
   CurPage:1,
@@ -61,17 +65,29 @@ class ProjectList extends Component{
             <div className="col-lg-9">
               <Projects dataSource={projects} />
             </div>
-            <div className="col-lg-3">
-              <div className="panel panel-primary">
-                <div className="panel-heading">
-                  Search
+            <div className="col-md-3">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">Filter</h3>
+                  {/*<div className="box-tools pull-right">
+                    <button className="btn btn-box-tool" data-widget="collapse"><i className="fa fa-plus"></i></button>
+                  </div>*/}
                 </div>
-                <div className="page-body">
-                   <div className="row">
-                     <div className="col-lg-10 text-center">
+                <div class="box-body">
+                  <form>
+                    <div className="form-group">
+                      <label>Project Name</label>
+                      <input type="text" className="form-control" placeholder="Project Name"/>
+                    </div>
+                    <div className="form-group">
+                      <label>Project Type</label>
+                      <select className="form-control"></select>
+                    </div>
+                    <div className="pull-right">
+                      <input type="submit" className="btn btn-primary" value="Search"></input>
+                    </div>
 
-                     </div>
-                   </div>
+                  </form>
                 </div>
               </div>
             </div>

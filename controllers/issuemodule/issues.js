@@ -4,6 +4,7 @@ const util=require('util');
 const mongoose=require('mongoose');
 const Issues = mongoose.model('Issues');
 const execPromise=require('../../core/execPromise');
+const Q=require('q');
 
 
 function getAllIssues(aTableInfo,callback){
