@@ -22,12 +22,17 @@ class IssueListComponent extends Component{
     }
   }
 
+  onSelect(id,event){
+    event.preventDefault();
+    this.props.onSelect(id);
+  }
+
   renderIssue(issues){
     return issues.map((item)=> {
       return (
         <tr key={item._id}>
-          <td className="mailbox-star"><a title={item.IssueType} href="#">{this.renderIcon(item.IssueType)}</a></td>
-          <td className="mailbox-name"><a title={item.IssueType} href="read-mail.html">{item.IssueTitle}</a></td>
+          <td className="mailbox-star">{this.renderIcon(item.IssueType)}</td>
+          <td className="mailbox-name"><a title={item.IssueType} value={item._id} href="" onClick={(event)=>this.onSelect(item._id,event)}>{item.IssueTitle}</a></td>
         </tr>
       )
     })
@@ -35,7 +40,6 @@ class IssueListComponent extends Component{
 
   render(){
     return(
-      <div className="row">
         <div className="col-md-3">
           <div className="box box-primary">
             <div className="box-header with-border">
@@ -80,7 +84,6 @@ class IssueListComponent extends Component{
             </div>
           </div>
         </div>
-      </div>
     )
   }
 

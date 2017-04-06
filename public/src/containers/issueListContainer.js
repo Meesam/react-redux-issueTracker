@@ -22,7 +22,7 @@ const mapDispatchToProps=(dispatch)=>{
 
     fetchIssueById:(issueId)=>{
       dispatch(fetchIssueById(issueId)).then((response)=>{
-        dispatch(fetchIssueByIdSuccess(response.value.data.objdata[0]));
+        dispatch(fetchIssueByIdSuccess(response.payload.data.objdata[0]));
       })
       .catch((error)=>{
         dispatch(fetchIssueByIdFailure(error));
