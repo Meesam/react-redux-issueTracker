@@ -31,8 +31,8 @@ class IssueDetail extends Component{
           <div className="box-header with-border">
             <h3 className="box-title">Issue Detail</h3>
             <div className="box-tools pull-right">
-              <a href="#" className="btn btn-box-tool" data-toggle="tooltip" title="Previous"><i className="fa fa-chevron-left"></i></a>
-              <a href="#" className="btn btn-box-tool" data-toggle="tooltip" title="Next"><i className="fa fa-chevron-right"></i></a>
+              <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Edit"><i className="fa fa-pencil"></i></button>
+              <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Comment"><i className="fa fa-comment"></i></button>
             </div>
           </div>
           <div className="box-body no-padding">
@@ -40,13 +40,49 @@ class IssueDetail extends Component{
               <h3> {this.renderIcon(issueData.IssueType)} {issueData.IssueTitle}</h3>
               <h5>Reported By: {issueData.Reporter} <span className="mailbox-read-time pull-right">{issueData.StartDate}</span></h5>
             </div>
-            <div className="mailbox-controls with-border text-center">
-              <div className="btn-group">
-                <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Delete"><i className="fa fa-trash-o"></i></button>
-                <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Reply"><i className="fa fa-reply"></i></button>
-                <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Forward"><i className="fa fa-share"></i></button>
+            <div className="mailbox-controls with-border">
+              <div className="row">
+                <div className="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                  <form className="form">
+                    <div className="form-group">
+                      Issue Type :-
+                      <label>{issueData.IssueType}</label>
+                    </div>
+                    <div className="form-group">
+                      Priority :-
+                      <label>{issueData.Priority}</label>
+                    </div>
+                    <div className="form-group">
+                      Status :-
+                      <label>{issueData.Status}</label>
+                    </div>
+                    <div className="form-group">
+                      Resolution :-
+                      <label>{issueData.Resolution}</label>
+                    </div>
+                  </form>
+                </div>
+                <div className="col-sm-4 col-lg-4 col-md-4 col-xs-4">
+                  <form className="form">
+                    <div className="form-group">
+                      Assignee :-
+                      <label>{issueData.Assignee}</label>
+                    </div>
+                    <div className="form-group">
+                      Sprint :-
+                      <label>{issueData.Sprint}</label>
+                    </div>
+                    <div className="form-group">
+                      Lable :-
+                      <label>{issueData.Lable}</label>
+                    </div>
+                    <div className="form-group">
+                      Watchers :-
+                      <label>{issueData.Watchers.length}</label>
+                    </div>
+                  </form>
+                </div>
               </div>
-              <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Print"><i className="fa fa-print"></i></button>
             </div>
             <div className="mailbox-read-message">
               <p>
