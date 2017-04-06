@@ -1,4 +1,5 @@
-import React,{Component,PropTypes} from 'react';
+import React,{ Component ,PropTypes} from 'react';
+import IssueActivity from './issueActivities.jsx';
 
 class IssueDetail extends Component{
   constructor(props){
@@ -115,12 +116,7 @@ class IssueDetail extends Component{
             </ul>
           </div>
           <div className="box-footer">
-            <div className="pull-right">
-              <button className="btn btn-default"><i className="fa fa-reply"></i> Reply</button>
-              <button className="btn btn-default"><i className="fa fa-share"></i> Forward</button>
-            </div>
-            <button className="btn btn-default"><i className="fa fa-trash-o"></i> Delete</button>
-            <button className="btn btn-default"><i className="fa fa-print"></i> Print</button>
+           <IssueActivity />
           </div>
         </div>
       </div>

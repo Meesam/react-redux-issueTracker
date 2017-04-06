@@ -47,13 +47,14 @@ class IssueListComponent extends Component{
               <div className="box-tools pull-right">
                 <div className="has-feedback">
                   <input type="text" className="form-control input-sm" placeholder="Search Issue" />
-                    <span className="glyphicon glyphicon-search form-control-feedback"></span>
+                    <span className="fa fa-search form-control-feedback"></span>
                 </div>
               </div>
             </div>
             <div className="box-body no-padding">
               <div className="mailbox-controls">
                 <button className="btn btn-default btn-sm"><i className="fa fa-refresh"></i></button>
+                <button className="btn btn-primary btn-sm"><i className="fa fa-plus"></i>Add</button>
                 <div className="pull-right">
                   1-50/200
                   <div className="btn-group">
@@ -90,7 +91,7 @@ class IssueListComponent extends Component{
 }
 
 IssueListComponent.propTypes={
-  dataSource:PropTypes.array.isRequired
+  dataSource:PropTypes.array
 }
 
 export default IssueListComponent;
