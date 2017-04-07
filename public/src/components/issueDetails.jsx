@@ -1,10 +1,16 @@
 import React,{ Component ,PropTypes} from 'react';
 import IssueActivity from './issueActivities.jsx';
+import {Link} from 'react-router';
 
 class IssueDetail extends Component{
   constructor(props){
     super(props)
+    this.goToEditIssue=this.goToEditIssue.bind(this)
   }
+
+  static contextTypes = {
+    router: PropTypes.object
+  };
 
   renderIcon(issueType){
     switch (issueType){
@@ -23,8 +29,12 @@ class IssueDetail extends Component{
     }
   }
 
+  goToEditIssue(id,event){
+    event.preventDefault();
+    this.context.router.push('editissue/'+id);
+  }
+
   render(){
-    console.log('issueDetails ' , this.props.issueData);
     const {issueData}=this.props
     return(
       <div className="col-md-9">
@@ -32,7 +42,7 @@ class IssueDetail extends Component{
           <div className="box-header with-border">
             <h3 className="box-title">Issue Detail</h3>
             <div className="box-tools pull-right">
-              <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Edit"><i className="fa fa-pencil"></i></button>
+              <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Edit" onClick={(event)=>this.goToEditIssue(issueData._id,event)}><i className="fa fa-pencil"></i></button>
               <button className="btn btn-default btn-sm" data-toggle="tooltip" title="Comment"><i className="fa fa-comment"></i></button>
             </div>
           </div>
@@ -79,7 +89,7 @@ class IssueDetail extends Component{
                     </div>
                     <div className="form-group">
                       Watchers :-
-                      <label>{issueData.Watchers.length}</label>
+                      <label>{issueData.Watchers}</label>
                     </div>
                   </form>
                 </div>
@@ -116,7 +126,7 @@ class IssueDetail extends Component{
             </ul>
           </div>
           <div className="box-footer">
-           <IssueActivity />
+           <IssueActivity activityData={issueData.Activity} />
           </div>
         </div>
       </div>

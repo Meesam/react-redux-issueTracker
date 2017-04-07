@@ -17,11 +17,11 @@
     Reporter:{type:String},
     Assignee:{type:String},
     Watchers:{type:Array},
-    Activity:{
+    Activity:[{
       UpdateDate:Date,
       UpdateBy:{type:String},
       UpdateDescription:{type:String}
-    },
+    }],
     Comments:{
       CommentBy:{type:String},
       CommentDate:Date,

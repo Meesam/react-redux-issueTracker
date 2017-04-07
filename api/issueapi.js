@@ -43,14 +43,13 @@
 
  // Issue by Id
   apiRoutes.get('/issues/:issueId',function(req,resp,next){
-    issues.getIssueById(req.params.issueId,function(data,err){
-      if(err) {
-        return next(err);
-      }
-      else{
-        resp.json(data);
-      }
-    });
+    issues.getIssueById(req.params.issueId)
+      .then(function (response) {
+        resp.json(response);
+      })
+      .catch(function (error) {
+        return next(error);
+      })
   });
 
 

@@ -7,6 +7,14 @@ class IssueActivities extends Component{
     super(props)
   }
 
+  renderActivity(){
+    if(this.props.activityData){
+      return(
+        <IssueTimeLine timeLineData={this.props.activityData} />
+      )
+    }
+  }
+
   render(){
     return(
       <div class="col-md-12">
@@ -18,7 +26,7 @@ class IssueActivities extends Component{
           </ul>
           <div class="tab-content">
             <div class="tab-pane" id="tab_1-1">
-              <IssueTimeLine />
+              {this.renderActivity()}
               <div className="clearfix"></div>
             </div>
             <div class="tab-pane active" id="tab_2-2">
@@ -31,6 +39,12 @@ class IssueActivities extends Component{
       </div>
     )
   }
+}
+
+//activityData
+
+IssueActivities.propTypes={
+  activityData:PropTypes.array
 }
 
 export default IssueActivities;

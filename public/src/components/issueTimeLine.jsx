@@ -1,98 +1,85 @@
 import React,{Component,PropTypes} from 'react'
+import moment from 'moment';
+import _ from 'lodash';
 
-class IssueTimeLine extends Component{
-  constructor(props){
+function formatTimeLineData(timeLineData){
+  let resultData=[];
+  let obj={
+    date:'',
+    data:[]
+  }
+  timeLineData.forEach((item,index)=>{
+    let obj={
+      date:moment(item.UpdateDate).format("DD MMM YYYY"),
+      data:timeLineData.filter((el)=>{
+         return moment(el.UpdateDate).format("DD MMM YYYY")==moment(item.UpdateDate).format("DD MMM YYYY")
+      }),
+      index:index
+    }
+    if(resultData.indexOf(obj.date)==-1){
+      resultData.push(obj);
+    }
+  })
+   return _.uniqBy(resultData, function (e) {
+    return e.date;
+  });
+}
+
+class IssueTimeLine extends Component {
+  constructor(props) {
     super(props)
   }
 
-  render(){
-    return(
-      <div class="col-md-12">
-        <ul class="timeline">
-          <li class="time-label">
-                  <span class="bg-red">
-                    10 Feb. 2014
-                  </span>
-          </li>
-          <li>
-            <i class="fa fa-envelope bg-blue"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-              <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-              <div class="timeline-body">
-                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                quora plaxo ideeli hulu weebly balihoo...
-              </div>
-              <div class="timeline-footer">
-                <a class="btn btn-primary btn-xs">Read more</a>
-                <a class="btn btn-danger btn-xs">Delete</a>
-              </div>
+  renderChnages(dataSource){
+    return dataSource.map((item)=>{
+      return (
+        <li key={item._id}>
+          <i class="fa fa-pencil bg-blue"></i>
+          <div class="timeline-item">
+            <h3 class="timeline-header"><a href="#">{item.UpdateBy}</a> made changes</h3>
+            <div class="timeline-body">
+              {item.UpdateDescription}
             </div>
-          </li>
-          <li>
-            <i class="fa fa-user bg-aqua"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-              <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-            </div>
-          </li>
-          <li>
-            <i class="fa fa-comments bg-yellow"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-              <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-              <div class="timeline-body">
-                Take me to your leader!
-                Switzerland is small and neutral!
-                We are more like Germany, ambitious and misunderstood!
-              </div>
-              <div class="timeline-footer">
-                <a class="btn btn-warning btn-flat btn-xs">View comment</a>
-              </div>
-            </div>
-          </li>
-          <li class="time-label">
-                  <span class="bg-green">
-                    3 Jan. 2014
-                  </span>
-          </li>
-          <li>
-            <i class="fa fa-camera bg-purple"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-              <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-              <div class="timeline-body">
-                <img src="http://placehold.it/150x100" alt="..." class="margin" />
-                  <img src="http://placehold.it/150x100" alt="..." class="margin" />
-                    <img src="http://placehold.it/150x100" alt="..." class="margin" />
-                      <img src="http://placehold.it/150x100" alt="..." class="margin" />
-              </div>
-            </div>
-          </li>
-          <li>
-            <i class="fa fa-video-camera bg-maroon"></i>
-            <div class="timeline-item">
-              <span class="time"><i class="fa fa-clock-o"></i> 5 days ago</span>
-              <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
-              <div class="timeline-body">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" frameborder="0" allowfullscreen></iframe>
-                </div>
-              </div>
-              <div class="timeline-footer">
-                <a href="#" class="btn btn-xs bg-maroon">See comments</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <i class="fa fa-clock-o bg-gray"></i>
-          </li>
-        </ul>
+          </div>
+        </li>
+      )
+    })
+  }
+
+  renderActivity(timeLineData) {
+   let resultData=[]
+    resultData  = formatTimeLineData(timeLineData)
+    return resultData.map((item) => {
+      return (
+        <div class="col-md-12" key={item.index}>
+          <ul class="timeline">
+            <li class="time-label">
+              <span class="bg-red">
+                {item.date}
+              </span>
+            </li>
+            {this.renderChnages(item.data)}
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          </ul>
+        </div>
+      )
+    })
+  }
+
+  render() {
+    const {timeLineData}=this.props;
+    return (
+      <div>
+        {this.renderActivity(timeLineData)}
       </div>
     )
   }
+}
+
+IssueTimeLine.propTypes={
+  timeLineData:PropTypes.array
 }
 
 export default IssueTimeLine;

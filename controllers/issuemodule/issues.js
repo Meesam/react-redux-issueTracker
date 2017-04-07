@@ -5,18 +5,18 @@ const mongoose=require('mongoose');
 const Issues = mongoose.model('Issues');
 const execPromise=require('../../core/execPromise');
 const Q=require('q');
+const moment=require('moment');
 
-
-function getAllIssues(aTableInfo,callback){
+function getAllIssues(aTableInfo){
   let perPage = aTableInfo.RPP
     , page = Math.max(0, aTableInfo.CurPage);
   return Q(Issues.count().exec())
     .then(function (count) {
       return Q(Issues.find().sort(aTableInfo.SortBy).skip(perPage * (page-1)).limit(perPage).exec())
-        .then(function(project) {
+        .then(function(issues) {
           return result={
             totalRecord:count,
-            data:project
+            data:issues
           }
         })
     })
@@ -27,32 +27,46 @@ function getAllIssues(aTableInfo,callback){
 
 
 function addIssue(issuedetails) {
+  issuedetails.Activity=[];
   issuedetails.Status="Open";
   issuedetails.Resolution="Unresolved";
   issuedetails.Reporter="Meesam";
   issuedetails.Assignee="Meesam";
+  issuedetails.Activity.push({
+    UpdateDate:moment().format("DD-MM-YYYY"),
+    UpdateBy:"Meesam",
+    UpdateDescription:"Create new Issue"
+  });
   let issue=new Issues(issuedetails);
-  return issue.savePromise();
+  return issue.savePromise()
+    .then(function (result) {
+       console.log('result ' , result);
+    })
 }
 
-function getIssueById(issueId,callback){
-  if(issueId==0)
-    callback(null,err);
-  else{
-    Issues.find({_id:issueId},function(err,data){
-      if(err)
-        callback(null,err);
-      else{
-        let	obj = {
-          status: 'success',
-          count:data.length,
-          data: data
-        };
-        callback(globalobj.globalObject(obj));
-      }
-    });
-  }
+/*function addActivity(id) {
+  return Q(Issues.findOne({_id:id}).exec())
+    .then(function(project) {
+
+    })
+    .catch(function (error) {
+       console.log('error',error)
+    })
+}*/
+
+function getIssueById(issueId){
+  return Q(Issues.find({_id:issueId}).exec())
+  .then(function (issue) {
+    return result={
+      data:issue
+    }
+  })
+  .catch(function (error) {
+     return error;
+  })
 };
+
+
 
 function getSearchIssue(aTableInfo,callback){
   let totalRecord=null;

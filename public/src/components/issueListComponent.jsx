@@ -1,4 +1,5 @@
 import React,{Component,PropTypes} from 'react';
+import {Link} from 'react-router';
 
 class IssueListComponent extends Component{
   constructor(props){
@@ -53,8 +54,7 @@ class IssueListComponent extends Component{
             </div>
             <div className="box-body no-padding">
               <div className="mailbox-controls">
-                <button className="btn btn-default btn-sm"><i className="fa fa-refresh"></i></button>
-                <button className="btn btn-primary btn-sm"><i className="fa fa-plus"></i>Add</button>
+                <Link to="/newissue" className="btn btn-primary btn-sm">Add Issue</Link>
                 <div className="pull-right">
                   1-50/200
                   <div className="btn-group">

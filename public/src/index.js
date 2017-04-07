@@ -18,6 +18,7 @@ import '../styles/css/skins/skin-blue.min.css';
 import Authenticated from './containers/authenticationContainer.jsx';
 import AppModuleIndex from  './pages/appModulesIndex.jsx';
 import IssueIndex from './pages/issueIndex.jsx';
+import NewIssueIndex from './pages/newIssueIndex.jsx';
 
 //for React Developer Tools
 window.React = React;
@@ -35,6 +36,8 @@ render(
         <Route path="newproject" component={Authenticated(AddProjectIndex)} />
         <Route path="modules" component={Authenticated(AppModuleIndex)} />
         <Route path="issues" components={IssueIndex}></Route>
+        <Route path="newissue" components={NewIssueIndex}></Route>
+        <Route path="editissue/:Id" components={NewIssueIndex}></Route>
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>
