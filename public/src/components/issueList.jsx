@@ -4,7 +4,7 @@ import IssueDetail from './issueDetails.jsx';
 
 const aTableInfo={
   CurPage:1,
-  RPP:20,
+  RPP:10,
   SortBy:"IssueTitle"
 }
 

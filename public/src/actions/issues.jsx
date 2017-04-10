@@ -10,10 +10,13 @@ export const ADD_ISSUE_FAILURE="ADD_ISSUE_FAILURE";
 export const FETCH_ISSUE_BY_ID="FETCH_ISSUE_BY_ID";
 export const FETCH_ISSUE_BY_ID_SUCCESS="FETCH_ISSUE_BY_ID_SUCCESS";
 export const FETCH_ISSUE_BY_ID_FAILURE="FETCH_ISSUE_BY_ID_FAILURE";
+export const FETCH_ISSUE_BY_NAME="";
+export const FETCH_ISSUE_BY_NAME_SUCCESS="";
+export const FETCH_ISSUE_BY_NAME_FAILURE="";
 
 const aTableInfo={
   CurPage:1,
-  RPP:5,
+  RPP:10,
 }
 
 export function fetchIssues(pageInfo=null) {
@@ -96,6 +99,35 @@ export function fetchIssueByIdSuccess(issue) {
 export function fetchIssueByIdFailure(error) {
   return{
     type:FETCH_ISSUE_BY_ID_FAILURE,
+    payload:error
+  }
+}
+
+export function fetchIssueByName(pageInfo=null,searchText) {
+  console.log('searchText ' , searchText);
+  const request=axios({
+    url:`${URL.ROOT_URL}/searchissues/${searchText}`,
+    method:'POST',
+    data:pageInfo ? pageInfo : aTableInfo,
+    Headers:[]
+  });
+  return{
+    type:FETCH_ISSUE_BY_NAME,
+    payload:request
+  }
+
+}
+
+export function fetchIssueByNameSuccess(issue) {
+  return{
+    type:FETCH_ISSUE_BY_NAME_SUCCESS,
+    payload:issue
+  }
+}
+
+export function fetchIssueByNameFailure(error) {
+  return{
+    type:FETCH_ISSUE_BY_NAME_FAILURE,
     payload:error
   }
 }

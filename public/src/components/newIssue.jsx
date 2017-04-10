@@ -47,13 +47,11 @@ class NewIssue extends Component{
     this.props.fetchProject(aTableInfo)
   }
 
-
   componentDidMount(){
-    console.log('i am issueId ' ,this.props.issueId );
-    this.props.dispatch(initialize('NewIssue',this.props.initailValues));
     if(this.props.issueId){
-      this.props.fetchIssueById(this.props.issueId);
-      this.props.dispatch(initialize('NewIssue',this.props.initailValues));
+      this.props.dispatch(initialize('NewIssue',this.props.initialValues));
+    } else {
+      this.props.dispatch(initialize('NewIssue',{}));
     }
   }
 

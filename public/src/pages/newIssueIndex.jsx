@@ -5,7 +5,7 @@ import NewIssueContainer from '../containers/newIssueContainer';
 export default class NewIssueIndex extends Component{
   render(){
     return(
-      <NewIssueContainer />
+      <NewIssueContainer id={this.props.params.Id} />
     )
   }
 }

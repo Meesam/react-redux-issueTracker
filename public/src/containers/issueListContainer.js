@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
-import {fetchIssues,fetchIssuesSuccess,fetchIssuesFailure,fetchIssueById,fetchIssueByIdSuccess,fetchIssueByIdFailure} from '.././actions/issues.jsx';
+import {fetchIssues,fetchIssuesSuccess,fetchIssuesFailure,fetchIssueById,fetchIssueByIdSuccess,fetchIssueByIdFailure,
+fetchIssueByName,fetchIssueByNameSuccess,fetchIssueByNameFailure} from '.././actions/issues.jsx';
 import IssueList from '.././components/issueList.jsx';
 
 const mapStateToProps=(state)=>{
@@ -28,7 +29,18 @@ const mapDispatchToProps=(dispatch)=>{
       .catch((error)=>{
         dispatch(fetchIssueByIdFailure(error));
       })
+    },
+
+    fetchIssueByName:(pageInfo,searchText)=>{
+      dispatch(fetchIssueByName(pageInfo, searchText)).then((response)=>{
+        dispatch(fetchIssueByNameSuccess(response.payload.data.data,pageInfo.CurPage));
+      })
+      .catch((error)=>{
+        dispatch(fetchIssueByNameFailure(error));
+      })
     }
+
+
   }
 }
 

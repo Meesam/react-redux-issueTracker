@@ -1,9 +1,18 @@
 import React,{Component,PropTypes} from 'react';
 import {Link} from 'react-router';
 
+const aTableInfo={
+  CurPage:1,
+  RPP:10,
+  SortBy:"IssueTitle"
+}
 class IssueListComponent extends Component{
   constructor(props){
     super(props)
+    this.onchange=this.onchange.bind(this)
+    this.state={
+      searchText:''
+    }
   }
 
   renderIcon(issueType){
@@ -28,6 +37,14 @@ class IssueListComponent extends Component{
     this.props.onSelect(id);
   }
 
+  onchange(event){
+    console.log('value are ', event.target.value)
+    this.setState({searchText: event.target.value});
+    if(this.state.searchText.length >=3){
+      this.props.fetchIssueByName(aTableInfo,this.state.searchText)
+    }
+  }
+
   renderIssue(issues){
     return issues.map((item)=> {
       return (
@@ -47,7 +64,7 @@ class IssueListComponent extends Component{
               <h3 className="box-title">All Issue</h3>
               <div className="box-tools pull-right">
                 <div className="has-feedback">
-                  <input type="text" className="form-control input-sm" placeholder="Search Issue" />
+                  <input type="text" name="searchText" value={this.state.searchText} onChange={this.onchange} className="form-control input-sm" placeholder="Search Issue" />
                     <span className="fa fa-search form-control-feedback"></span>
                 </div>
               </div>

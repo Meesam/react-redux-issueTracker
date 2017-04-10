@@ -7,21 +7,10 @@ import {fetchProject,fetchProjectSuccess,fetchProjectFailure} from '../actions/p
 import NewIssue from '../components/newIssue.jsx';
 
 const mapStateToProps=(state,ownProps)=>{
-  console.log('ownProps ' , ownProps);
   return{
     newIssue:state.issues.newIssue,
-    issueId:ownProps.params.Id,
+    issueId:ownProps.id,
     projectList:state.projects.projectList,
-    /*initialValues:{
-      _id:state.issues.issue._id ,
-      IssueTitle:state.issues.issue.IssueTitle,
-      Project:state.issues.issue.Project,
-      IssueType:state.issues.issue.IssueType ,
-      Priority:state.issues.issue.Priority  ,
-      Sprint:state.issues.issue.Sprint ,
-      Lable:state.issues.issue.Lable  ,
-      Description:state.issues.issue.Description ,
-    }*/
     initialValues:state.issues.issue
 
   }

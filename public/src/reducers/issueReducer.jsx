@@ -1,6 +1,6 @@
 // Get Type from action directory
 import {FETCH_ISSUES,FETCH_ISSUES_SUCCESS,FETCH_ISSUES_FAILURE,ADD_ISSUE,ADD_ISSUE_SUCCESS,ADD_ISSUE_FAILURE,
-FETCH_ISSUE_BY_ID,FETCH_ISSUE_BY_ID_SUCCESS,FETCH_ISSUE_BY_ID_FAILURE} from '../actions/issues.jsx'
+FETCH_ISSUE_BY_ID,FETCH_ISSUE_BY_ID_SUCCESS,FETCH_ISSUE_BY_ID_FAILURE, FETCH_ISSUE_BY_NAME,FETCH_ISSUE_BY_NAME_SUCCESS,FETCH_ISSUE_BY_NAME_FAILURE} from '../actions/issues.jsx'
 
 
 const INITIAL_STATE = {
@@ -17,7 +17,7 @@ export default function (state = INITIAL_STATE, action) {
       return {...state,issuesList:{issues:[],curPage:1,error:null,loading:true} }
 
     case FETCH_ISSUES_SUCCESS:
-      return{...state,issuesList:{issues:action.payload.issues,curPage:action.payload.curPage,error:null,loading:false}};
+      return {...state,issuesList:{issues:action.payload.issues,curPage:action.payload.curPage,error:null,loading:false}};
 
     case FETCH_ISSUES_FAILURE:
       error = action.payload || {message: action.payload.message};
@@ -42,6 +42,16 @@ export default function (state = INITIAL_STATE, action) {
     case FETCH_ISSUE_BY_ID_FAILURE:
       error = action.payload || {message: action.payload.message};
       return {...state,issue:null};
+
+    case FETCH_ISSUE_BY_NAME:
+      return {...state,issuesList:{issues:[],curPage:1,error:null,loading:true} };
+
+    case FETCH_ISSUE_BY_NAME_SUCCESS:
+       return {...state,issuesList:{issues:action.payload.issues,curPage:action.payload.curPage,error:null,loading:false}};
+
+    case FETCH_ISSUE_BY_NAME_FAILURE:
+      error = action.payload || {message: action.payload.message};
+      return{...state,issuesList:{issues:[],curPage:1,error:error,loading:false}};
 
     default:
       return state;
