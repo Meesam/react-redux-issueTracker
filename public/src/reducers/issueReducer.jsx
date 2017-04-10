@@ -6,7 +6,7 @@ FETCH_ISSUE_BY_ID,FETCH_ISSUE_BY_ID_SUCCESS,FETCH_ISSUE_BY_ID_FAILURE} from '../
 const INITIAL_STATE = {
   issuesList:{issues:[],curPage:1,error:null,loading:false},
   newIssue:{success:null,error:null,loading:false},
-  issue:{}
+  issue:null
  };
 
 export default function (state = INITIAL_STATE, action) {

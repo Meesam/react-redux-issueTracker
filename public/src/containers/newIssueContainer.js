@@ -7,11 +7,12 @@ import {fetchProject,fetchProjectSuccess,fetchProjectFailure} from '../actions/p
 import NewIssue from '../components/newIssue.jsx';
 
 const mapStateToProps=(state,ownProps)=>{
+  console.log('ownProps ' , ownProps);
   return{
     newIssue:state.issues.newIssue,
-    issueId:ownProps.id,
+    issueId:ownProps.params.Id,
     projectList:state.projects.projectList,
-    initialValues:{
+    /*initialValues:{
       _id:state.issues.issue._id ,
       IssueTitle:state.issues.issue.IssueTitle,
       Project:state.issues.issue.Project,
@@ -20,7 +21,9 @@ const mapStateToProps=(state,ownProps)=>{
       Sprint:state.issues.issue.Sprint ,
       Lable:state.issues.issue.Lable  ,
       Description:state.issues.issue.Description ,
-    }
+    }*/
+    initialValues:state.issues.issue
+
   }
 }
 
@@ -37,12 +40,11 @@ const mapDispatchToProps=(dispatch)=>{
 
     fetchIssueById:(issueId)=>{
       dispatch(fetchIssueById(issueId)).then((response)=>{
-        console.log('response.payload.data.data' , response.payload.data.data);
         dispatch(fetchIssueByIdSuccess(response.payload.data.data[0]));
       })
-        .catch((error)=>{
-          dispatch(fetchIssueByIdFailure(error));
-        })
+      .catch((error)=>{
+        dispatch(fetchIssueByIdFailure(error));
+      })
     }
   }
 }

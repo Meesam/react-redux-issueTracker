@@ -47,8 +47,9 @@ class NewIssue extends Component{
     this.props.fetchProject(aTableInfo)
   }
 
+
   componentDidMount(){
-    console.log('i am call ' ,this.props );
+    console.log('i am issueId ' ,this.props.issueId );
     this.props.dispatch(initialize('NewIssue',this.props.initailValues));
     if(this.props.issueId){
       this.props.fetchIssueById(this.props.issueId);
@@ -166,5 +167,6 @@ class NewIssue extends Component{
 
 export default reduxForm({
   form: 'NewIssue',
+  fields:['_id','IssueTitle','Project','IssueType','Priority','Sprint','Lable','Description'],
   validate,
 })(NewIssue)
