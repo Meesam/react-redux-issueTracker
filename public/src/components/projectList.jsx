@@ -1,92 +1,105 @@
 import React,{ Component , PropTypes} from 'react';
-import { Link } from 'react-router';
+import PageBase from '../common/renderPageBase.jsx';
+import Projects from './projectListComponent.jsx';
+import Pagination from '../common/renderPagination.jsx';
+import { reduxForm, Field, SubmissionError } from 'redux-form';
+import renderField from '../common/renderField.jsx';
+import renderTextArea from '../common/renderTextArea.jsx';
+import renderDatePicker from '../common/renderDatePicker.jsx'
+
+const aTableInfo={
+  CurPage:1,
+  RPP:5,
+  SortBy:"ProjectName"
+}
 
 class ProjectList extends Component{
   constructor(props){
     super(props)
+    this.moveNext=this.moveNext.bind(this);
+    this.movePrev=this.movePrev.bind(this);
   }
+
   static contextTypes = {
     router: PropTypes.object
   };
 
   componentWillMount(){
-    this.props.fetchProject();
+    this.props.fetchProject(aTableInfo);
   }
 
-  componentDidMount(){
-    this.hidesuccessalert()
+  moveNext(){
+    let pageInfo={
+      CurPage:this.props.projectList.curPage + 1,
+      RPP:5,
+    }
+    this.props.fetchProject(pageInfo);
   }
 
-  hidesuccessalert(){
-    $('#success-alert').fadeOut( 3000, function() {
-      $( '#success-alert' ).remove();
-    });
+  movePrev(){
+    let pageInfo={
+      CurPage:this.props.projectList.curPage - 1,
+      RPP:5,
+    }
+    this.props.fetchProject(pageInfo);
   }
-
-  renderProject(project){
-   return project.map((item)=>{
-     return(
-        <tr key={item._id}>
-           <td>{item.ProjectName}</td>
-           <td>{item.ProjectName}</td>
-           <td>{item.Description}</td>
-       </tr>
-     );
-   })
-  }
-
 
   render(){
     const { projects,error,loading } = this.props.projectList
     if(loading){
       return (
-          <div className="progress">
-            <div className="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: 40}}>
-               <span className="sr-only">40% Complete (success)</span>
-            </div>
+        <div className="progress">
+          <div className="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: 40}}>
+             <span className="sr-only">40% Complete (success)</span>
           </div>
-        )
+        </div>
+      )
     }
     else if(error){
       return <div className="alert-error">${error.message}</div>
     }
     return(
-         <div>
-         <div id="success-alert" className="alert alert-success alert-dismissable">
-            <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>  <i className="icon fa fa-check"></i> Success!</h4>
-            Project list loaded successfully !
-         </div>
-         <section className="content-header">
-            <h1>
-             Projects
-            </h1>
-         </section>
-        <div className="row">
-          <div className="col-xs-12">
-            <div className="box">
-              <div className="box-header">
-                <input type="button" className="btn btn-primary" value="Add New" />
-                <h5> Total 15 record are found</h5>
+      <PageBase title="Project List">
+        <div>
+          <div className="row">
+            <div className="col-lg-9">
+              <Projects dataSource={projects} />
             </div>
-             <div className="box-body table-responsive no-padding">
-                  <table className="table">
-                      <thead className="thead-inverse">
-                        <tr>
-                          <th>Project Name</th>
-                          <th>Type</th>
-                          <th>Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.renderProject(projects)}
-                      </tbody>
-                  </table>
-               </div>
+            <div className="col-md-3">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">Filter</h3>
+                  {/*<div className="box-tools pull-right">
+                    <button className="btn btn-box-tool" data-widget="collapse"><i className="fa fa-plus"></i></button>
+                  </div>*/}
+                </div>
+                <div class="box-body">
+                  <form>
+                    <div className="form-group">
+                      <label>Project Name</label>
+                      <input type="text" className="form-control" placeholder="Project Name"/>
+                    </div>
+                    <div className="form-group">
+                      <label>Project Type</label>
+                      <select className="form-control"></select>
+                    </div>
+                    <div className="pull-right">
+                      <input type="submit" className="btn btn-primary" value="Search"></input>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div className="row-fluid">
+            <div className="col-lg-12">
+              <Pagination pageInfo={aTableInfo} moveNext={this.moveNext} movePrev={this.movePrev} />
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-</div>
+      </PageBase>
     )
   }
 }

@@ -8,7 +8,9 @@ export default class Header extends Component{
     router: PropTypes.object
   };
   render(){
-    const {authenticatedUser}=this.props;
+    const {authenticatedUser,user}=this.props;
+    console.log('user details are  ' + JSON.stringify(user.user));
+
     if(authenticatedUser){
       return(
         <header className="main-header">
@@ -99,13 +101,13 @@ export default class Header extends Component{
                 <li className="dropdown user user-menu">
                   <a href="#" className="dropdown-toggle" data-toggle="dropdown">
                     <img src="styles/img/user2-160x160.jpg" className="user-image" alt="User Image" />
-                    <span className="hidden-xs">Meesam</span>
+                    <span className="hidden-xs">{user.user.FirstName} {user.user.LastName}</span>
                   </a>
                   <ul className="dropdown-menu">
                     <li className="user-header">
                       <img src="styles/img/user2-160x160.jpg" className="img-circle" alt="User Image" />
                       <p>
-                        Meesam
+                        {user.user.FirstName} {user.user.LastName}
                       </p>
                     </li>
                     <li className="user-footer">

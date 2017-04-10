@@ -1,38 +1,37 @@
 import axios from 'axios';
 import URL from '../../../appconfig';
 
-// Project List
 export const FETCH_PROJECT = "FETCH_PROJECT" ;
 export const FETCH_PROJECT_SUCCESS = "FETCH_PROJECT_SUCCESS";
 export const FETCH_PROJECT_FAILURE = "FETCH_PROJECT_FAILURE";
 export const RESETS_PROJECT = "RESETS_PROJECT";
-
-//Create new post
-export const CREATE_PROJECT = 'CREATE_PROJECT';
-export const CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
-export const CREATE_PROJECT_FAILURE = 'CREATE_PROJECT_FAILURE';
-export const RESET_NEW_PROJECT = 'RESET_NEW_PROJECT';
-
-//Validate post fields like Title, Categries on the server
-export const VALIDATE_PROJECT_FIELDS = 'VALIDATE_PROJECT_FIELDS';
-export const VALIDATE_PROJECT_FIELDS_SUCCESS = 'VALIDATE_PROJECT_FIELDS_SUCCESS';
-export const VALIDATE_PROJECT_FIELDS_FAILURE = 'VALIDATE_PROJECT_FIELDS_FAILURE';
-export const RESET_PROJECT_FIELDS = 'RESET_PROJECT_FIELDS';
-
-// Project Type DropDown LIST
+export const FETCH_PROJECT_BY_ID="FETCH_PROJECT_BY_ID";
+export const FETCH_PROJECT_BY_ID_SUCCESS="FETCH_PROJECT_BY_ID_SUCCESS";
+export const FETCH_PROJECT_BY_ID_FAILURE="FETCH_PROJECT_BY_ID_FAILURE";
+export const ADD_PROJECT="ADD_PROJECT";
+export const ADD_PROJECT_SUCCESS="ADD_PROJECT_SUCCESS";
+export const ADD_PROJECT_FAILURE="ADD_PROJECT_FAILURE";
 export const FETCH_PROJECTTYPE="FETCH_PROJECTTYPE";
 export const FETCH_PROJECTTYPE_SUCCESS="FETCH_PROJECTTYPE_SUCCESS";
 export const FETCH_PROJECTTYPE_FAILURE="FETCH_PROJECTTYPE_FAILURE";
+export const SEARCH_PROJECT="SEARCH_PROJECT";
+export const SEARCH_PROJECT_SUCCESS="SEARCH_PROJECT_SUCCESS";
+export const SEARCH_PROJECT_FAILURE="SEARCH_PROJECT_FAILURE";
+export const ASYNC_VALIDATE="ASYNC_VALIDATE";
+export const ASYNC_VALIDATE_SUCCESS="ASYNC_VALIDATE_SUCCESS";
+export const ASYNC_VALIDATE_FAILURE="ASYNC_VALIDATE_FAILURE";
 
-// Sugges Project List
-export const FECTH_SUGGEST_PROJECT="FECTH_SUGGEST_PROJECT";
-export const FECTH_SUGGEST_PROJECT_SUCCESS="FECTH_SUGGEST_PROJECT_SUCCESS";
-export const FECTH_SUGGEST_PROJECT_FAILURE="FECTH_SUGGEST_PROJECT_FAILURE";
+const aTableInfo={
+  CurPage:1,
+  RPP:5,
+  SortBy:"ProjectName"
+}
 
-export function fetchProject() {
+export function fetchProject(pageInfo=null) {
   const request=axios({
     url:`${URL.ROOT_URL}/project`,
     method:'POST',
+    data:pageInfo ? pageInfo : aTableInfo,
     Headers:[]
   });
   return{
@@ -41,11 +40,14 @@ export function fetchProject() {
   }
 }
 
-export function fetchProjectSuccess(projects) {
-   return{
-     type:FETCH_PROJECT_SUCCESS,
-     payload:projects
-   }
+export function fetchProjectSuccess(projects,curpage) {
+  return{
+    type:FETCH_PROJECT_SUCCESS,
+    payload:{
+      projects:projects,
+      curPage:curpage,
+    }
+  }
 }
 
 export function fetchProjectFailure(error) {
@@ -55,32 +57,58 @@ export function fetchProjectFailure(error) {
   }
 }
 
-export function fetchSuggestProject(name){
+export function fectchProjectById(projectId) {
   const request=axios({
-    url:`${URL.ROOT_URL}/suggestprojects/${name}`,
+    url:`${URL.ROOT_URL}/projects/${projectId}`,
     method:'GET',
     Headers:[]
   });
   return{
-    type:FECTH_SUGGEST_PROJECT,
+    type:FETCH_PROJECT_BY_ID,
     payload:request
   }
 }
 
-export function fectchSuggestProjectSuccess(projects) {
+export function fetchProjectByIdSuccess(project) {
   return{
-    type:FECTH_SUGGEST_PROJECT_SUCCESS,
-    payload:projects
+    type:FETCH_PROJECT_BY_ID_SUCCESS,
+    payload:project
   }
 }
 
-export function fectchSuggestProjectFailure(error) {
+export function fetchProjectByIdFailure(error) {
   return{
-    type:FECTH_SUGGEST_PROJECT_FAILURE,
+    type:FETCH_PROJECT_BY_ID_FAILURE,
     payload:error
   }
 }
 
+export function addProject(formValues) {
+  const request = axios({
+    method: 'post',
+    data: formValues,
+    url: `${URL.ROOT_URL}/projects/add`,
+    headers: []
+  });
+  return {
+    type: ADD_PROJECT,
+    payload: request
+  }
+}
+
+export function addProjectSuccess(response) {
+  return {
+    type: ADD_PROJECT_SUCCESS,
+    payload: response
+  }
+}
+
+export function addProjectFailue(error) {
+  return {
+    type: ADD_PROJECT_FAILURE,
+    payload: error
+  }
+}
 
 export function fetchProjectType(){
   const request=axios({
@@ -108,66 +136,57 @@ export function fetchProjectTypeFailure(error){
   }
 }
 
-export function validateProjectFields(props) {
-  //note: we cant have /posts/validateFields because it'll match /posts/:id path!
-  const request = axios.post(`${URL.ROOT_URL}/posts/validate/fields`, props);
-
-  return {
-    type: VALIDATE_PROJECT_FIELDS,
-    payload: request
-  };
-}
-
-export function validateProjectFieldsSuccess() {
-  return {
-    type: VALIDATE_PROJECT_FIELDS_SUCCESS
-  };
-}
-
-export function validateProjectFieldsFailure(error) {
-  return {
-    type: VALIDATE_PROJECT_FIELDS_FAILURE,
-    payload: error
-  };
-}
-
-export function resetProjectFields() {
-  return {
-    type: RESET_PROJECT_FIELDS
-  }
-};
-
-
-export function createProject(props) {
-  const request = axios({
-    method: 'post',
-    data: props,
-    url: `${URL.ROOT_URL}/projects/add`,
-    headers: []
+export function searchProject(pageInfo) {
+  pageInfo.CurPage=aTableInfo.CurPage;
+  pageInfo.RPP=aTableInfo.RPP;
+  const request=axios({
+    url:`${URL.ROOT_URL}/project/search`,
+    method:'POST',
+    data:pageInfo,
+    Headers:[]
   });
-
-  return {
-    type: CREATE_PROJECT,
-    payload: request
-  };
-}
-
-export function createProjectSuccess(newPost) {
-  return {
-    type: CREATE_PROJECT_SUCCESS,
-    payload: newPost
-  };
-}
-
-export function createProjectFailure(error) {
-  return {
-    type: CREATE_PROJECT_FAILURE,
-    payload: error
-  };
-}
-
-export function resetNewProject() {
-  return {
-    type: RESET_NEW_PROJECT
+  return{
+    type:SEARCH_PROJECT,
+    payload:request
   }
-};
+}
+
+export function searchProjectSuccess(projects) {
+  return{
+    type:SEARCH_PROJECT_SUCCESS,
+    payload:projects
+  }
+}
+
+export function searchProjectFailure(error) {
+  return{
+    type:SEARCH_PROJECT_FAILURE,
+    payload:error
+  }
+}
+
+export function asyncValidation(input) {
+  const request=axios({
+    url:`${URL.ROOT_URL}/project/${input}`,
+    method:'GET',
+    Headers:[]
+  });
+  return{
+    type:ASYNC_VALIDATE,
+    payload:request
+  }
+}
+
+export function asyncValidateSuccess(result) {
+  return{
+    type:ASYNC_VALIDATE_SUCCESS,
+    payload:result
+  }
+}
+
+export function asyncValidateFailure(error) {
+  return{
+    type:ASYNC_VALIDATE_FAILURE,
+    payload:error
+  }
+}

@@ -48,8 +48,6 @@ exports.createUsers=function(users,callback){
 			_id: user._id,
 			emailid:user.Email
 		};
-
-		console.log('encode user are ' + JSON.stringify(u));
 		return token = jwt.sign(u, process.env.JWT_SECRET, {
 			expiresIn: 60 * 60 * 24 // expires in 24 hours
 		});
@@ -121,7 +119,6 @@ exports.getUserBytoken=function(token,callback){
 				if (err)
 					callback(null,err);
 				if(data) {
-					console.log('reaspone ' + JSON.stringify(data));
 					token = generateToken(data);
 					obj={
 						status:'success',
@@ -145,7 +142,7 @@ exports.getUserBytoken=function(token,callback){
 };
 
 // Get All Users
-exports.getAllUsers=function(callback){
+exports.getAllUsers=function(aTableInfo,callback){
     Users.find({},function(err,data){
 		if(err)
 		 callback(null,err);

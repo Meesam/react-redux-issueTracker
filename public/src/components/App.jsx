@@ -3,15 +3,23 @@ import { render } from 'react-dom';
 import ModulesList from '.././pages/modulesIndex.jsx';
 import Header from '.././pages/headerIndex.jsx';
 import Footer from '.././staticComponents/footer.jsx'
+import setAuthorizationToken from '.././utils/setAuthorizationToken';
 
-export default class App extends Component {
+const styles={
+  mainDiv:{
+    minHeight:'901px !important'
+  }
+}
+
+class App extends Component {
   componentWillMount() {
-      this.props.loadUserFromToken();
+    this.props.loadUserFromToken();
+    setAuthorizationToken(localStorage.JwtToken);
   }
 
   render() {
     return (
-      <div>
+      <div style={styles.mainDiv}>
         <div>
             <Header />
         </div>
@@ -23,11 +31,10 @@ export default class App extends Component {
           {this.props.children}
         </section>
       </div>
-      <div>
-         <Footer />
-      </div>
         <div  className="control-sidebar-bg"></div>
       </div>
     );
   }
 }
+
+export default App;

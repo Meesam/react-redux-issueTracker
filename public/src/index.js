@@ -16,12 +16,17 @@ import '!style-loader!css-loader!sass-loader!font-awesome/css/font-awesome.css';
 import '../styles/css/AdminLTE.css';
 import '../styles/css/skins/skin-blue.min.css';
 import Authenticated from './containers/authenticationContainer.jsx';
+import AppModuleIndex from  './pages/appModulesIndex.jsx';
+import IssueIndex from './pages/issueIndex.jsx';
+import NewIssueIndex from './pages/newIssueIndex.jsx';
+
 
 //for React Developer Tools
 window.React = React;
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
+
 render(
     <Provider store={store}>
     <Router history={history}>
@@ -29,7 +34,11 @@ render(
         <Route path="home" component={Home} />
         <Route path="login" component={SignIn} />
         <Route path="project" component={Authenticated(ProjectIndex)} />
-        <Route path="addproject" component={AddProjectIndex} />
+        <Route path="newproject" component={Authenticated(AddProjectIndex)} />
+        <Route path="modules" component={Authenticated(AppModuleIndex)} />
+        <Route path="issues" components={IssueIndex}></Route>
+        <Route path="newissue" components={NewIssueIndex}></Route>
+        <Route path="editissue/:Id" components={NewIssueIndex}></Route>
         <Route path="*" component={NotFoundPage}/>
       </Route>  
     </Router>

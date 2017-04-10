@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
       if(!token || token === '') {
         return;
       }
+
       dispatch(UserFromToken(token))
         .then((response) => {
           if (!response.error) {
@@ -22,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
         });
     },
     resetMe: () =>{
-      console.log('i am call');
       localStorage.removeItem('jwtToken');
       dispatch(resetToken());
     }

@@ -8,15 +8,15 @@ export default function (ComposedComponent) {
     }
 
     componentWillMount(){
-      console.log('will ', this.props.authenticatedUser);
-      if(this.props.authenticatedUser==='logout' ||this.props.authenticatedUser===null){
+      let token = localStorage.getItem('jwtToken');
+      if(this.props.authenticatedUser==='logout' || token==='undefined' || this.props.authenticatedUser===null){
         this.context.router.push('/login');
       }
     }
 
     componentWillUpdate(nextProps){
-      console.log('update',this.props.authenticatedUser);
-      if(nextProps.authenticatedUser==='logout' ||this.props.authenticatedUser===null){
+      let token = localStorage.getItem('jwtToken');
+      if(nextProps.authenticatedUser==='logout' || token==='undefined' || nextProps.authenticatedUser===null){
         this.context.router.push('/login');
       }
     }
@@ -32,6 +32,5 @@ export default function (ComposedComponent) {
       user: state.user
     };
   }
-  
   return connect(mapStateToProps)(Authentication) ;
 }

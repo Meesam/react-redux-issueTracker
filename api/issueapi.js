@@ -4,28 +4,54 @@
   let express=require('express');
   let issues=require('../controllers/issuemodule/issues');
   let apiRoutes = express.Router();
+  let logger=require('../core/Logger');
 
-  apiRoutes.get('/issues',function(req,resp,next) {
-    issues.getAllissues(function(data,err){
-	  if(err) {
-		 return next(err);
-	  }
-	  else {
-		  resp.json(data);
-	  }
+// Get all issues list
+  apiRoutes.post('/issues',function (req,resp,next) {
+    issues.getAllIssues(req.body)
+      .then(function (response) {
+        resp.json(response);
+      })
+      .catch(function (error) {
+        return next(error);
+      })
+  });
+
+  // Add Issues
+  apiRoutes.post('/issues/add',function (req,resp,next) {
+    let issuedetails=req.body;
+    issues.addIssue(issuedetails).
+      then(function (result) {
+        resp.json(result);
+      })
+      .catch(function (err) {
+        return next(err);
+      })
+  })
+
+  // Issue Search
+  apiRoutes.post('/issues/search',function (req,resp,next) {
+    issues.getSearchIssue(req.body,function(data,err){
+      if(err) {
+        return next(err);
+      }
+      else {
+        resp.json(data);
+      }
     });
   });
 
-  apiRoutes.post('/issues',function(req,resp,next) {
-	 issues.addIssue(req.body,function(data,err) {
-	   if(err) {
-		  return next(err);
-	   }
-	   else {
-		  resp.json(data);
-	   }
- });
+ // Issue by Id
+  apiRoutes.get('/issues/:issueId',function(req,resp,next){
+    issues.getIssueById(req.params.issueId)
+      .then(function (response) {
+        resp.json(response);
+      })
+      .catch(function (error) {
+        return next(error);
+      })
   });
+
 
   module.exports = apiRoutes;
 })();
