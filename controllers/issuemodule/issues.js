@@ -25,8 +25,34 @@ function getAllIssues(aTableInfo){
     })
 };
 
+function getIssuesByName(aTableInfo){
+  let perPage = aTableInfo.RPP
+    , page = Math.max(0, aTableInfo.CurPage);
+  let mongoqueryfilter;
+  if(aTableInfo.searchText ==""){
+    mongoqueryfilter={};
+  }
+  else {
+    mongoqueryfilter={'IssueTitle' : new RegExp(aTableInfo.searchText, 'i')}
+  }
+  return Q(Issues.count(mongoqueryfilter).exec())
+    .then(function (count) {
+      return Q(Issues.find(mongoqueryfilter).sort(aTableInfo.SortBy).skip(perPage * (page-1)).limit(perPage).exec())
+        .then(function(issues) {
+          return result={
+            totalRecord:count,
+            data:issues
+          }
+        })
+    })
+    .catch(function (error) {
+      return error;
+    })
+};
+
 
 function addIssue(issuedetails) {
+  console.log('i am call save');
   issuedetails.Activity=[];
   issuedetails.Status="Open";
   issuedetails.Resolution="Unresolved";
@@ -42,6 +68,25 @@ function addIssue(issuedetails) {
     .then(function (result) {
        console.log('result ' , result);
     })
+}
+
+function updateIssue(issuedetails) {
+ console.log('i am call');
+  return Q(Issues.findOne({_id:issuedetails._id}).exec())
+   .then(function (resp) {
+     let issue=new Issues(issuedetails);
+     console.log('issuedetails ' , issuedetails);
+      return  issue.updatePromise()
+        .then(function (result) {
+          console.log('result ' , result);
+        })
+    });
+    /*tank.size = 'large';
+    tank.save(function (err, updatedTank) {
+      if (err) return handleError(err);
+      res.send(updatedTank);
+    });*/
+
 }
 
 /*function addActivity(id) {
@@ -105,5 +150,7 @@ module.exports={
   addIssue:addIssue,
   getSearchIssue:getSearchIssue,
   getIssueById:getIssueById,
-  getAllIssues:getAllIssues
+  getAllIssues:getAllIssues,
+  getIssuesByName:getIssuesByName,
+  updateIssue:updateIssue
 }

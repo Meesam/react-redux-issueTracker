@@ -17,17 +17,39 @@
       })
   });
 
+  // Get issues list by Name
+  apiRoutes.post('/searchissues',function (req,resp,next) {
+    issues.getIssuesByName(req.body)
+      .then(function (response) {
+        resp.json(response);
+      })
+      .catch(function (error) {
+        return next(error);
+      })
+  });
+
   // Add Issues
   apiRoutes.post('/issues/add',function (req,resp,next) {
-    let issuedetails=req.body;
-    issues.addIssue(issuedetails).
-      then(function (result) {
+    let issuedetails = req.body;
+    console.log('req.body  are ', req.body);
+    if (req.body._id) {
+      issues.updateIssue(issuedetails).then(function (result) {
+        resp.json(result);
+      })
+        .catch(function (err) {
+          return next(err);
+        })
+    }
+    else {
+      issues.addIssue(issuedetails).then(function (result) {
         resp.json(result);
       })
       .catch(function (err) {
         return next(err);
       })
-  })
+    }
+  });
+
 
   // Issue Search
   apiRoutes.post('/issues/search',function (req,resp,next) {

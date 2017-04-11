@@ -47,7 +47,7 @@ export default function (state = INITIAL_STATE, action) {
       return {...state,issuesList:{issues:[],curPage:1,error:null,loading:true} };
 
     case FETCH_ISSUE_BY_NAME_SUCCESS:
-       return {...state,issuesList:{issues:action.payload.issues,curPage:action.payload.curPage,error:null,loading:false}};
+      return {...state,issuesList:{issues:action.payload.issues,curPage:action.payload.curPage,error:null,loading:false}};
 
     case FETCH_ISSUE_BY_NAME_FAILURE:
       error = action.payload || {message: action.payload.message};

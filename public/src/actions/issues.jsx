@@ -10,9 +10,9 @@ export const ADD_ISSUE_FAILURE="ADD_ISSUE_FAILURE";
 export const FETCH_ISSUE_BY_ID="FETCH_ISSUE_BY_ID";
 export const FETCH_ISSUE_BY_ID_SUCCESS="FETCH_ISSUE_BY_ID_SUCCESS";
 export const FETCH_ISSUE_BY_ID_FAILURE="FETCH_ISSUE_BY_ID_FAILURE";
-export const FETCH_ISSUE_BY_NAME="";
-export const FETCH_ISSUE_BY_NAME_SUCCESS="";
-export const FETCH_ISSUE_BY_NAME_FAILURE="";
+export const FETCH_ISSUE_BY_NAME="FETCH_ISSUE_BY_NAME";
+export const FETCH_ISSUE_BY_NAME_SUCCESS="FETCH_ISSUE_BY_NAME_SUCCESS";
+export const FETCH_ISSUE_BY_NAME_FAILURE="FETCH_ISSUE_BY_NAME_FAILURE";
 
 const aTableInfo={
   CurPage:1,
@@ -103,10 +103,9 @@ export function fetchIssueByIdFailure(error) {
   }
 }
 
-export function fetchIssueByName(pageInfo=null,searchText) {
-  console.log('searchText ' , searchText);
+export function fetchIssueByName(pageInfo=null) {
   const request=axios({
-    url:`${URL.ROOT_URL}/searchissues/${searchText}`,
+    url:`${URL.ROOT_URL}/searchissues`,
     method:'POST',
     data:pageInfo ? pageInfo : aTableInfo,
     Headers:[]
@@ -118,10 +117,14 @@ export function fetchIssueByName(pageInfo=null,searchText) {
 
 }
 
-export function fetchIssueByNameSuccess(issue) {
+export function fetchIssueByNameSuccess(issuesData, curpage) {
+  console.log('issuesData' , issuesData);
   return{
     type:FETCH_ISSUE_BY_NAME_SUCCESS,
-    payload:issue
+    payload:{
+      issues:issuesData,
+      curPage:curpage
+    }
   }
 }
 

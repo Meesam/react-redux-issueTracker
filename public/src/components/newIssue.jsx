@@ -94,7 +94,7 @@ class NewIssue extends Component{
     const {handleSubmit, submitting,issue} = this.props;
     const {projects}=this.props.projectList
     return(
-      <PageBase title="Add Issue">
+      <PageBase title={this.props.issueId ? "Edit Issue" : "Add Issue"}>
         <form onSubmit={ handleSubmit(validateAndCreateIssue) }>
           <div className="form-group">
             <label>Project</label>
@@ -150,7 +150,7 @@ class NewIssue extends Component{
               type="submit"
               className="btn btn-primary"
               disabled={ submitting }>
-              Submit
+              {this.props.issueId ? "Save" : "Create"}
             </button>
             <Link
               to="/issues"
