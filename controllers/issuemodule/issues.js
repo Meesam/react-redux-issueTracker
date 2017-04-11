@@ -71,22 +71,31 @@ function addIssue(issuedetails) {
 }
 
 function updateIssue(issuedetails) {
- console.log('i am call');
+ console.log('i am call update');
   return Q(Issues.findOne({_id:issuedetails._id}).exec())
-   .then(function (resp) {
-     let issue=new Issues(issuedetails);
-     console.log('issuedetails ' , issuedetails);
-      return  issue.updatePromise()
-        .then(function (result) {
-          console.log('result ' , result);
-        })
+   .then(function (issue) {
+     issue.IssueTitle=issuedetails.IssueTitle? issuedetails.IssueTitle : issue.IssueTitle;
+     issue.Project=issuedetails.Project ? issuedetails.Project : issue.Project;
+     issue.IssueType=issuedetails.IssueType ? issuedetails.IssueType : issue.IssueType;
+     issue.Priority=issuedetails.Priority ? issuedetails.Priority : issue.Priority;
+     issue.Sprint=issuedetails.Sprint ? issuedetails.Sprint: issue.Sprint;
+     issue.Lable=issuedetails.Lable ? issuedetails.Lable:issue.Lable
+     issue.Resolution=issuedetails.Resolution ? issuedetails.Resolution : issue.Resolution
+     issue.Assignee=issuedetails.Assignee ? issuedetails.Assignee : issue.Assignee;
+     issue.Description=issuedetails.Description ? issuedetails.Description : issue.Description
+     issue.Activity.push({
+       UpdateDate:moment().format("DD-MM-YYYY"),
+       UpdateBy:"Meesam",
+       UpdateDescription:"Update this issue"
+     });
+     return issue.savePromise()
+       .then((result)=> {
+         console.log('result ' , result);
+       })
+       .catch((error)=>{
+          return error;
+       })
     });
-    /*tank.size = 'large';
-    tank.save(function (err, updatedTank) {
-      if (err) return handleError(err);
-      res.send(updatedTank);
-    });*/
-
 }
 
 /*function addActivity(id) {

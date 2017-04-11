@@ -11,7 +11,7 @@
     StartDate:Date,
     EndDate:Date,
     Sprint:{type:String},
-    Lable:{type:String},
+    Lable:{type:Array},
     Status:{type:String},
     Resolution:{type:String},
     Reporter:{type:String},

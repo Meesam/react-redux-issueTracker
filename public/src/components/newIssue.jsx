@@ -6,6 +6,7 @@ import renderTextArea from '../common/renderTextArea.jsx';
 import renderDatePicker from '../common/renderDatePicker.jsx'
 import { addIssue , addIssueSuccess , addIssueFailure } from '../actions/issues.jsx';
 import PageBase from '../common/renderPageBase.jsx';
+import Chips from '../common/renderChips.jsx';
 
 const aTableInfo={
   CurPage:1,
@@ -132,11 +133,8 @@ class NewIssue extends Component{
             </Field>
           </div>
           <div className="form-group">
-            <Field
-              name="Lable"
-              type="text"
-              component={ renderField }
-              label="Lable" />
+            <label>Lable</label>
+            <Chips chips={[]} placeholder="Add a Lable..." max="10" />
           </div>
           <div className="form-group">
             <Field
