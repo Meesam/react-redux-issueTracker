@@ -13,6 +13,9 @@ export const FETCH_ISSUE_BY_ID_FAILURE="FETCH_ISSUE_BY_ID_FAILURE";
 export const FETCH_ISSUE_BY_NAME="FETCH_ISSUE_BY_NAME";
 export const FETCH_ISSUE_BY_NAME_SUCCESS="FETCH_ISSUE_BY_NAME_SUCCESS";
 export const FETCH_ISSUE_BY_NAME_FAILURE="FETCH_ISSUE_BY_NAME_FAILURE";
+export const ADD_ISSUE_COMMENT="ADD_ISSUE_COMMENT";
+export const ADD_ISSUE_COMMENT_SUCCESS="ADD_ISSUE_COMMENT_SUCCESS";
+export const ADD_ISSUE_COMMENT_FAILURE="ADD_ISSUE_COMMENT_FAILURE";
 
 const aTableInfo={
   CurPage:1,
@@ -73,6 +76,33 @@ export function addIssueSuccess(response) {
 export function addIssueFailure(error) {
   return{
     type:ADD_ISSUE_FAILURE,
+    payload:error
+  }
+}
+
+export function addIssueComment(formValues) {
+  const request=axios({
+    url:`${URL.ROOT_URL}/issues/addcomment`,
+    method:'POST',
+    data:formValues,
+    Headers:[]
+  });
+  return{
+    type:ADD_ISSUE_COMMENT,
+    payload:request
+  }
+}
+
+export function addIssueCommentSuccess(response) {
+  return {
+    type:ADD_ISSUE_COMMENT_SUCCESS,
+    payload:response
+  }
+}
+
+export function addIssueCommentFailure(error) {
+  return{
+    type:ADD_ISSUE_COMMENT_FAILURE,
     payload:error
   }
 }

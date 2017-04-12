@@ -49,6 +49,20 @@
     }
   });
 
+  // Add Issue comment
+  apiRoutes.post('/issues/addcomment',function (req,resp,next) {
+    let issuedetails = req.body;
+    console.log('req.body  are ', req.body);
+    if (req.body._id) {
+      issues.addIssueComment(issuedetails).then(function (result) {
+        resp.json(result);
+      })
+      .catch(function (err) {
+        return next(err);
+      })
+    }
+  });
+
 
   // Issue Search
   apiRoutes.post('/issues/search',function (req,resp,next) {

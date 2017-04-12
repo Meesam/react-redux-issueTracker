@@ -6,7 +6,8 @@ import IssueList from '.././components/issueList.jsx';
 const mapStateToProps=(state)=>{
   return{
     issuesList:state.issues.issuesList,
-    issueDetails:state.issues.issue
+    issueDetails:state.issues.issue,
+    newComment:state.issues.newComment,
   }
 }
 

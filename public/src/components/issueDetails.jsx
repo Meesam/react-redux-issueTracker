@@ -126,7 +126,7 @@ class IssueDetail extends Component{
             </ul>
           </div>
           <div className="box-footer">
-           <IssueActivity activityData={issueData.Activity} />
+           <IssueActivity activityData={issueData.Activity} commentData={issueData.Comments} addComment={this.props.addComment} />
           </div>
         </div>
       </div>
@@ -136,7 +136,8 @@ class IssueDetail extends Component{
 }
 
 IssueDetail.propTypes={
-  issueData:PropTypes.object.isRequired
+  issueData:PropTypes.object.isRequired,
+  addComment:PropTypes.func
 }
 
 

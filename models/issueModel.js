@@ -22,11 +22,11 @@
       UpdateBy:{type:String},
       UpdateDescription:{type:String}
     }],
-    Comments:{
+    Comments:[{
       CommentBy:{type:String},
       CommentDate:Date,
       CommentText:{type:String}
-    },
+    }],
     Attachment:{
       FileName:{type:String},
       Extention:{type:String}

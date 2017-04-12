@@ -97,6 +97,24 @@ function updateIssue(issuedetails) {
     });
 }
 
+function addIssueComment(issuedetails) {
+  return Q(Issues.findOne({_id:issuedetails._id}).exec())
+    .then(function (issue) {
+      issue.Comments.push({
+        CommentDate:new Date(),
+        CommentBy:"Meesam",
+        CommentText:issuedetails.CommentText
+      });
+      return issue.savePromise()
+        .then((result)=> {
+          console.log('result ' , result);
+        })
+        .catch((error)=>{
+          return error;
+        })
+    });
+}
+
 /*function addActivity(id) {
   return Q(Issues.findOne({_id:id}).exec())
     .then(function(project) {
@@ -160,5 +178,6 @@ module.exports={
   getIssueById:getIssueById,
   getAllIssues:getAllIssues,
   getIssuesByName:getIssuesByName,
-  updateIssue:updateIssue
+  updateIssue:updateIssue,
+  addIssueComment:addIssueComment
 }
