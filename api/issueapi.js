@@ -4,7 +4,6 @@
   let express=require('express');
   let issues=require('../controllers/issuemodule/issues');
   let apiRoutes = express.Router();
-  let logger=require('../core/Logger');
 
 // Get all issues list
   apiRoutes.post('/issues',function (req,resp,next) {

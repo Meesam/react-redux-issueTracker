@@ -6,6 +6,7 @@ const Issues = mongoose.model('Issues');
 const execPromise=require('../../core/execPromise');
 const Q=require('q');
 const moment=require('moment');
+let logger=require('../../core/Logger');
 
 function getAllIssues(aTableInfo){
   let perPage = aTableInfo.RPP
@@ -52,26 +53,24 @@ function getIssuesByName(aTableInfo){
 
 
 function addIssue(issuedetails) {
-  console.log('i am call save');
   issuedetails.Activity=[];
   issuedetails.Status="Open";
   issuedetails.Resolution="Unresolved";
   issuedetails.Reporter="Meesam";
   issuedetails.Assignee="Meesam";
   issuedetails.Activity.push({
-    UpdateDate:moment().format("DD-MM-YYYY"),
+    UpdateDate:new Date(),
     UpdateBy:"Meesam",
     UpdateDescription:"Create new Issue"
   });
   let issue=new Issues(issuedetails);
   return issue.savePromise()
     .then(function (result) {
-       console.log('result ' , result);
+      console.log('result ' , result);
     })
 }
 
 function updateIssue(issuedetails) {
- console.log('i am call update');
   return Q(Issues.findOne({_id:issuedetails._id}).exec())
    .then(function (issue) {
      issue.IssueTitle=issuedetails.IssueTitle? issuedetails.IssueTitle : issue.IssueTitle;
@@ -84,7 +83,7 @@ function updateIssue(issuedetails) {
      issue.Assignee=issuedetails.Assignee ? issuedetails.Assignee : issue.Assignee;
      issue.Description=issuedetails.Description ? issuedetails.Description : issue.Description
      issue.Activity.push({
-       UpdateDate:moment().format("DD-MM-YYYY"),
+       UpdateDate:new Date(),
        UpdateBy:"Meesam",
        UpdateDescription:"Update this issue"
      });
