@@ -2,9 +2,11 @@ const webpack = require('webpack');
 const path=require('path');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const ExtractTextPlugin=require('extract-text-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-entry: './public/src/index.js',
+  devtool:'cheap-module-eval-source-map',
+  entry: './public/src/index.js',
   output: {
     path:'./public/dist',
     filename: 'bundle.js',
@@ -23,9 +25,9 @@ entry: './public/src/index.js',
        {
         test:/\.css$/,
          exclude: /node_modules/,
-        loader:ExtractTextPlugin.extract({
-          fallbackLoader:'style-loader',
-          loader:'css-loader!sass-loader'
+         loader:ExtractTextPlugin.extract({
+         fallbackLoader:'style-loader',
+         loader:'css-loader!sass-loader'
         })
       },
       {
@@ -54,6 +56,7 @@ entry: './public/src/index.js',
       }
     }),*/
     new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: 'http://localhost:9000' })
 
   ],
   node:{

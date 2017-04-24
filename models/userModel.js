@@ -1,7 +1,4 @@
-(function () {
-    'use strict';
-
-let mongoose = require( 'mongoose' );
+import mongoose from 'mongoose';
 
 // Create User Schema
 let userSchema=new mongoose.Schema({
@@ -31,5 +28,7 @@ let userSchema=new mongoose.Schema({
     DOB:Date,
     LastLogin:Date
 });
-module.exports = mongoose.model('Users',userSchema);
-})();
+
+const Users = mongoose.model('Users', userSchema);
+
+module.export=Users;

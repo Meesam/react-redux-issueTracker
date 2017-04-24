@@ -8,8 +8,8 @@ const mapStateToProps=(state)=>{
     issuesList:state.issues.issuesList,
     issueDetails:state.issues.issue,
     newComment:state.issues.newComment,
-  }
-}
+  };
+};
 
 const mapDispatchToProps=(dispatch)=>{
   return{
@@ -19,7 +19,7 @@ const mapDispatchToProps=(dispatch)=>{
       })
       .catch((error)=>{
         dispatch(fetchIssuesFailure(error));
-      })
+      });
     },
 
     fetchIssueById:(issueId)=>{
@@ -28,7 +28,7 @@ const mapDispatchToProps=(dispatch)=>{
       })
       .catch((error)=>{
         dispatch(fetchIssueByIdFailure(error));
-      })
+      });
     },
 
     fetchIssueByName:(pageInfo)=>{
@@ -37,10 +37,10 @@ const mapDispatchToProps=(dispatch)=>{
       })
       .catch((error)=>{
         dispatch(fetchIssueByNameFailure(error));
-      })
+      });
     }
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssueList);
 

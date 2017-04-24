@@ -1,52 +1,40 @@
-(function () {
-	'use strict';
+import express from 'express';
+import db from '../core/db';
+//import projects from '../controllers/projectmodule/projects';
+import logger from '../core/Logger';
+import {getAllProject,getSearchProject,getProjectById, getProjectByName,
+  checkProjectByName, addProject} from '../controllers/projectmodule/projects'
 
-let express=require('express');
-let db=require('../core/db');
-let projects=require('../controllers/projectmodule/projects');
 let apiRoutes = express.Router();
-let logger=require('../core/Logger');
 
 
-// Get all project list
-  apiRoutes.post('/project',function (req,resp,next) {
-    projects.getAllProject(req.body)
-      .then(function (response) {
-        resp.json(response);
-     })
-      .catch(function (error) {
-        return next(error);
-     })
+apiRoutes.post('/project',function (req,resp,next) {
+return getAllProject(req.body)
+    .then(function (response) {
+      console.log('project responce are ' , response);
+      resp.json(response);
+    })
+    .catch(function (error) {
+      return next(error);
+    })
+});
+
+apiRoutes.post('/project/search',function (req,resp,next) {
+  return getSearchProject(req.body,function(data,err){
+    if(err) {
+      return next(err);
+    }
+    else {
+      console.log('search response are ' + JSON.stringify(data));
+      resp.json(data);
+    }
   });
-
-  // Project Search
-  apiRoutes.post('/project/search',function (req,resp,next) {
-    projects.getSearchProject(req.body,function(data,err){
-      if(err) {
-        return next(err);
-      }
-      else {
-        console.log('search response are ' + JSON.stringify(data));
-        resp.json(data);
-      }
-    });
-  });
+});
 
 
 apiRoutes.get('/projects/:projectId',function(req,resp,next){
   logger.info('projectId on server ' , req.params)
-	projects.getProjectById(req.params.projectId,function(data,err){
-		if(err) {
-			return next(err);
-		}
-		else{
-			resp.json(data);
-		}
-	});
-});
-
-apiRoutes.get('/suggestprojects/:name',function(req,resp,next){
-  projects.getProjectByName(req.params.name,function(data,err){
+  return getProjectById(req.params.projectId,function(data,err){
     if(err) {
       return next(err);
     }
@@ -56,23 +44,34 @@ apiRoutes.get('/suggestprojects/:name',function(req,resp,next){
   });
 });
 
-  apiRoutes.get('/project/:name',function(req,resp,next){
-    projects.checkProjectByName(req.params.name,function(data,err){
-      if(err) {
-        return next(err);
-      }
-      else{
-        console.log('data ' , data);
-        resp.json(data);
-      }
-    });
+apiRoutes.get('/suggestprojects/:name',function(req,resp,next){
+  return getProjectByName(req.params.name,function(data,err){
+    if(err) {
+      return next(err);
+    }
+    else{
+      resp.json(data);
+    }
   });
+});
+
+apiRoutes.get('/project/:name',function(req,resp,next){
+ return checkProjectByName(req.params.name,function(data,err){
+    if(err) {
+      return next(err);
+    }
+    else{
+      console.log('data ' , data);
+      resp.json(data);
+    }
+  });
+});
 
 
 apiRoutes.post('/projects/add',function(req,resp,next){
-	projects.addProject(req.body)
+  return addProject(req.body)
     .then(function (result) {
-       resp.json(result);
+      resp.json(result);
     })
     .catch(function (err) {
       return next(err);
@@ -81,4 +80,7 @@ apiRoutes.post('/projects/add',function(req,resp,next){
 
 module.exports = apiRoutes;
 
-})();
+
+
+
+

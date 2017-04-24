@@ -1,9 +1,4 @@
-(function () {
-  'use strict';
-
-let mongoose = require( 'mongoose' );
-//let explain = require('mongoose-explain');
-
+import mongoose from 'mongoose';
 
 let projectSchema=new mongoose.Schema({
   ProjectName:{type:String,required:true},
@@ -12,8 +7,6 @@ let projectSchema=new mongoose.Schema({
   ProjectType:{type:String,required:true},
   Description:{type:String, required:true},
 });
+const Projects = mongoose.model('Projects', projectSchema);
 
-//projectSchema.plugin(explain);
-
-module.exporst=mongoose.model('Projects',projectSchema);
-})();
+module.export=Projects;

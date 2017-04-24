@@ -1,7 +1,4 @@
-(function () {
-  'use strict';
-
-  let mongoose = require( 'mongoose' );
+import mongoose from 'mongoose';
 
   let IssueSchema=new mongoose.Schema({
     IssueTitle:{type:String,required:true},
@@ -34,5 +31,7 @@
     Description:{type:String, required:true},
 
   });
-  module.exporst=mongoose.model('Issues',IssueSchema);
-})();
+
+const Issues = mongoose.model('Issues', IssueSchema);
+
+module.export=Issues;

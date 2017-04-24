@@ -1,3 +1,4 @@
+
 const appconfig=require('../../appconfig');
 const globalobj=require('../../core/global');
 const util=require('util');
@@ -8,7 +9,9 @@ const Q=require('q');
 const moment=require('moment');
 let logger=require('../../core/Logger');
 
-function getAllIssues(aTableInfo){
+let result;
+
+export function getAllIssues(aTableInfo){
   let perPage = aTableInfo.RPP
     , page = Math.max(0, aTableInfo.CurPage);
   return Q(Issues.count().exec())
@@ -26,7 +29,7 @@ function getAllIssues(aTableInfo){
     })
 };
 
-function getIssuesByName(aTableInfo){
+export function getIssuesByName(aTableInfo){
   let perPage = aTableInfo.RPP
     , page = Math.max(0, aTableInfo.CurPage);
   let mongoqueryfilter;
@@ -52,7 +55,7 @@ function getIssuesByName(aTableInfo){
 };
 
 
-function addIssue(issuedetails) {
+export function addIssue(issuedetails) {
   issuedetails.Activity=[];
   issuedetails.Status="Open";
   issuedetails.Resolution="Unresolved";
@@ -70,7 +73,7 @@ function addIssue(issuedetails) {
     })
 }
 
-function updateIssue(issuedetails) {
+export function updateIssue(issuedetails) {
   return Q(Issues.findOne({_id:issuedetails._id}).exec())
    .then(function (issue) {
      issue.IssueTitle=issuedetails.IssueTitle? issuedetails.IssueTitle : issue.IssueTitle;
@@ -97,7 +100,7 @@ function updateIssue(issuedetails) {
     });
 }
 
-function addIssueComment(issuedetails) {
+export function addIssueComment(issuedetails) {
   return Q(Issues.findOne({_id:issuedetails._id}).exec())
     .then(function (issue) {
       issue.Comments.push({
@@ -125,7 +128,7 @@ function addIssueComment(issuedetails) {
     })
 }*/
 
-function getIssueById(issueId){
+export function getIssueById(issueId){
   return Q(Issues.find({_id:issueId}).exec())
   .then(function (issue) {
     return result={
@@ -139,7 +142,7 @@ function getIssueById(issueId){
 
 
 
-function getSearchIssue(aTableInfo,callback){
+export function getSearchIssue(aTableInfo,callback){
   let totalRecord=null;
   let perPage = aTableInfo.RPP
     , page = Math.max(0, aTableInfo.CurPage);
@@ -172,12 +175,3 @@ function getSearchIssue(aTableInfo,callback){
   }).skip(perPage * (page-1)).limit(perPage).sort('IssueTitle');
 };
 
-module.exports={
-  addIssue:addIssue,
-  getSearchIssue:getSearchIssue,
-  getIssueById:getIssueById,
-  getAllIssues:getAllIssues,
-  getIssuesByName:getIssuesByName,
-  updateIssue:updateIssue,
-  addIssueComment:addIssueComment
-}

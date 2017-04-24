@@ -2,10 +2,11 @@ const appconfig=require('../../appconfig');
 const globalobj=require('../../core/global');
 const util=require('util');
 const mongoose=require('mongoose');
-let Projects = mongoose.model('Projects');
+const Projects = mongoose.model('Projects');
 const Q=require('q');
 
-  function getAllProject(aTableInfo) {
+let result;
+export function getAllProject(aTableInfo) {
     let perPage = aTableInfo.RPP
       , page = Math.max(0, aTableInfo.CurPage);
     return Q(Projects.count().exec())
@@ -23,7 +24,7 @@ const Q=require('q');
       })
   }
 
-  function getSearchProject(aTableInfo,callback){
+export  function getSearchProject(aTableInfo,callback){
     console.log('aTableInfo ' +  JSON.stringify(aTableInfo));
     let totalRecord=null;
     let perPage = aTableInfo.RPP
@@ -63,12 +64,12 @@ const Q=require('q');
     }).skip(perPage * (page-1)).limit(perPage).sort('ProjectName');
   };
 
- function addProject(projectdetails,callback){
+export function addProject(projectdetails,callback){
 		let project=new Projects(projectdetails);
 		return project.savePromise();
 	};
 
- function getProjectById(projectId,callback){
+export function getProjectById(projectId,callback){
 		if(projectId==0)
 			callback(null,err);
 		else{
@@ -87,7 +88,7 @@ const Q=require('q');
 		}
 	};
 
-	function getProjectByName(name,callback){
+export 	function getProjectByName(name,callback){
 		Projects.find({'ProjectName':new RegExp(name,'i') },function(err,data){
 			if(err)
 				callback(null,err);
@@ -103,7 +104,7 @@ const Q=require('q');
 	};
 
   //checkProjectByName
-  function checkProjectByName(name,callback){
+ export function checkProjectByName(name,callback){
     Projects.find({'ProjectName':name },function(err,data){
       if(err)
         callback(null,err);
@@ -118,14 +119,6 @@ const Q=require('q');
     });
   };
 
-  module.exports={
-    checkProjectByName:checkProjectByName,
-    getProjectByName:getProjectByName,
-    getProjectById:getProjectById,
-    addProject:addProject,
-    getSearchProject:getSearchProject,
-    getAllProject:getAllProject
-	}
 
 
 
