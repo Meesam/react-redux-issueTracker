@@ -13,7 +13,7 @@ return getAllIssues(req.body)
    .catch(function (error) {
      return next(error);
    })
-}),
+})
 
 // Get issues list by Name
 apiRoutes.post('/searchissues', function (req, resp, next) {
@@ -24,7 +24,7 @@ apiRoutes.post('/searchissues', function (req, resp, next) {
    .catch(function (error) {
      return next(error);
    })
-}),
+})
 
 // Add Issues
 apiRoutes.post('/issues/add', function (req, resp, next) {
@@ -45,7 +45,7 @@ apiRoutes.post('/issues/add', function (req, resp, next) {
        return next(err);
      })
  }
-}),
+})
 
 // Add Issue comment
 apiRoutes.post('/issues/addcomment', function (req, resp, next) {
@@ -58,7 +58,7 @@ apiRoutes.post('/issues/addcomment', function (req, resp, next) {
        return next(err);
      })
  }
-}),
+})
 
 // Issue Search
 apiRoutes.post('/issues/search', function (req, resp, next) {
@@ -70,7 +70,7 @@ apiRoutes.post('/issues/search', function (req, resp, next) {
      resp.json(data);
    }
  });
-}),
+})
 
 apiRoutes.get('/issues/:issueId', function (req, resp, next) {
 return getIssueById(req.params.issueId)
