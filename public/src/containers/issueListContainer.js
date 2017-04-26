@@ -6,9 +6,10 @@ import IssueList from '.././components/issueList.jsx';
 const mapStateToProps=(state)=>{
   return{
     issuesList:state.issues.issuesList,
-    issueDetails:state.issues.issue
-  }
-}
+    issueDetails:state.issues.issue,
+    newComment:state.issues.newComment,
+  };
+};
 
 const mapDispatchToProps=(dispatch)=>{
   return{
@@ -18,31 +19,28 @@ const mapDispatchToProps=(dispatch)=>{
       })
       .catch((error)=>{
         dispatch(fetchIssuesFailure(error));
-      })
+      });
     },
 
     fetchIssueById:(issueId)=>{
       dispatch(fetchIssueById(issueId)).then((response)=>{
-        console.log('response.payload.data.data[0]' , response.payload.data.data[0])
         dispatch(fetchIssueByIdSuccess(response.payload.data.data[0]));
       })
       .catch((error)=>{
         dispatch(fetchIssueByIdFailure(error));
-      })
+      });
     },
 
-    fetchIssueByName:(pageInfo,searchText)=>{
-      dispatch(fetchIssueByName(pageInfo, searchText)).then((response)=>{
+    fetchIssueByName:(pageInfo)=>{
+      dispatch(fetchIssueByName(pageInfo)).then((response)=>{
         dispatch(fetchIssueByNameSuccess(response.payload.data.data,pageInfo.CurPage));
       })
       .catch((error)=>{
         dispatch(fetchIssueByNameFailure(error));
-      })
+      });
     }
-
-
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssueList);
 

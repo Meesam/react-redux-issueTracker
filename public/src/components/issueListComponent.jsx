@@ -1,11 +1,9 @@
 import React,{Component,PropTypes} from 'react';
 import {Link} from 'react-router';
+import { reduxForm, Field, SubmissionError,initialize } from 'redux-form';
+import renderField from '../common/renderField.jsx';
 
-const aTableInfo={
-  CurPage:1,
-  RPP:10,
-  SortBy:"IssueTitle"
-}
+
 class IssueListComponent extends Component{
   constructor(props){
     super(props)
@@ -38,11 +36,8 @@ class IssueListComponent extends Component{
   }
 
   onchange(event){
-    console.log('value are ', event.target.value)
     this.setState({searchText: event.target.value});
-    if(this.state.searchText.length >=3){
-      this.props.fetchIssueByName(aTableInfo,this.state.searchText)
-    }
+    this.props.onSearch(this.state.searchText);
   }
 
   renderIssue(issues){
@@ -64,8 +59,9 @@ class IssueListComponent extends Component{
               <h3 className="box-title">All Issue</h3>
               <div className="box-tools pull-right">
                 <div className="has-feedback">
+
                   <input type="text" name="searchText" value={this.state.searchText} onChange={this.onchange} className="form-control input-sm" placeholder="Search Issue" />
-                    <span className="fa fa-search form-control-feedback"></span>
+                  <span className="fa fa-search form-control-feedback"></span>
                 </div>
               </div>
             </div>
@@ -108,7 +104,8 @@ class IssueListComponent extends Component{
 }
 
 IssueListComponent.propTypes={
-  dataSource:PropTypes.array
+  dataSource:PropTypes.array,
+  onSearch:PropTypes.func
 }
 
 export default IssueListComponent;

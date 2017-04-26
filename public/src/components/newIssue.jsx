@@ -6,6 +6,7 @@ import renderTextArea from '../common/renderTextArea.jsx';
 import renderDatePicker from '../common/renderDatePicker.jsx'
 import { addIssue , addIssueSuccess , addIssueFailure } from '../actions/issues.jsx';
 import PageBase from '../common/renderPageBase.jsx';
+import Chips from '../common/renderChips.jsx';
 
 const aTableInfo={
   CurPage:1,
@@ -94,7 +95,7 @@ class NewIssue extends Component{
     const {handleSubmit, submitting,issue} = this.props;
     const {projects}=this.props.projectList
     return(
-      <PageBase title="Add Issue">
+      <PageBase title={this.props.issueId ? "Edit Issue" : "Add Issue"}>
         <form onSubmit={ handleSubmit(validateAndCreateIssue) }>
           <div className="form-group">
             <label>Project</label>
@@ -132,11 +133,8 @@ class NewIssue extends Component{
             </Field>
           </div>
           <div className="form-group">
-            <Field
-              name="Lable"
-              type="text"
-              component={ renderField }
-              label="Lable" />
+            <label>Lable</label>
+            <Chips chips={[]} placeholder="Add a Lable..." max="10" />
           </div>
           <div className="form-group">
             <Field
@@ -150,7 +148,7 @@ class NewIssue extends Component{
               type="submit"
               className="btn btn-primary"
               disabled={ submitting }>
-              Submit
+              {this.props.issueId ? "Save" : "Create"}
             </button>
             <Link
               to="/issues"

@@ -1,7 +1,4 @@
-(function () {
-  'use strict';
-
-  let mongoose = require( 'mongoose' );
+import mongoose from 'mongoose';
 
   let IssueSchema=new mongoose.Schema({
     IssueTitle:{type:String,required:true},
@@ -11,7 +8,7 @@
     StartDate:Date,
     EndDate:Date,
     Sprint:{type:String},
-    Lable:{type:String},
+    Lable:{type:Array},
     Status:{type:String},
     Resolution:{type:String},
     Reporter:{type:String},
@@ -22,11 +19,11 @@
       UpdateBy:{type:String},
       UpdateDescription:{type:String}
     }],
-    Comments:{
+    Comments:[{
       CommentBy:{type:String},
       CommentDate:Date,
       CommentText:{type:String}
-    },
+    }],
     Attachment:{
       FileName:{type:String},
       Extention:{type:String}
@@ -34,5 +31,7 @@
     Description:{type:String, required:true},
 
   });
-  module.exporst=mongoose.model('Issues',IssueSchema);
-})();
+
+const Issues = mongoose.model('Issues', IssueSchema);
+
+module.export=Issues;

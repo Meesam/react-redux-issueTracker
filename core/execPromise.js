@@ -4,10 +4,14 @@
 const Q=require('q');
 const mongoose=require('mongoose');
 
+function getModel() {
+  return this.constructor;
+}
+
 mongoose.Document.prototype.savePromise = function () {
   var that = this;
-  return Q.Promise(function(resolve, reject) {
-    that.save(function (err, item, numberAffected) {
+  return Q.Promise((resolve, reject)=> {
+    that.save((err, item, numberAffected)=> {
       if (err) {
         reject(err);
       }
@@ -15,3 +19,4 @@ mongoose.Document.prototype.savePromise = function () {
     });
   });
 };
+

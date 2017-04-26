@@ -1,19 +1,19 @@
-const express=require('express');
-let db=require('../core/db');
-let projecttype=require('../controllers/projectmodule/projectTypeModule');
-let apiRoutes = express.Router();
-let redis=require('../core/redisClient');
+import express from 'express';
+import db from '../core/db';
+import logger from '../core/Logger';
+import {getProjectType } from '../controllers/projectmodule/projectTypeModule'
 
-  apiRoutes.get('/projecttype',function(req,resp,next){
-    console.log('i am call');
-    projecttype.getProjectType(function(data,err){
-      if(err){
-        return next(err);
-      } else{
-        console.log('data are ' + JSON.stringify(data));
-        resp.json(data);
-      }
-    });
+let apiRoutes = express.Router();
+apiRoutes.get('/projecttype',function(req,resp,next){
+  return getProjectType(function(data,err){
+    if(err){
+      return next(err);
+    } else{
+      console.log('data are ' + JSON.stringify(data));
+      resp.json(data);
+    }
   });
+});
 
 module.exports = apiRoutes;
+

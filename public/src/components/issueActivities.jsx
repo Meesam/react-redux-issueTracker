@@ -30,7 +30,7 @@ class IssueActivities extends Component{
               <div className="clearfix"></div>
             </div>
             <div class="tab-pane active" id="tab_2-2">
-              <IssueComment />
+              <IssueComment addComment={this.props.addComment} commentData={this.props.commentData} />
               <div className="clearfix"></div>
             </div>
           </div>
@@ -44,7 +44,9 @@ class IssueActivities extends Component{
 //activityData
 
 IssueActivities.propTypes={
-  activityData:PropTypes.array
+  activityData:PropTypes.array,
+  addComment:PropTypes.func,
+  commentData:PropTypes.array
 }
 
 export default IssueActivities;

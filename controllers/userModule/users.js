@@ -1,21 +1,20 @@
-(function () {
-	'use strict';
 
+let mongoose=require('mongoose');
+let Users = mongoose.model('Users');
 let appconfig=require('../../appconfig');
 let globalobj=require('../../core/global');
 let util=require('util');
 let Q=require('q');
-let mongoose=require('mongoose');
-let Users = mongoose.model('Users');
-let UsersDetails=mongoose.model('UsersDetails');
+
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
 mongoose.Promise = Promise;
 
+	/*
 if (!process.env.JWT_SECRET) {
 	console.error('ERROR!: Please set JWT_SECRET before running the app. \n run: export JWT_SECRET=<some secret string> to set JWTSecret. ')
 	process.exit();
-}
+}*/
 
 // Add User
 exports.createUsers=function(users,callback){
@@ -82,7 +81,7 @@ exports.doLogin=function(users, callback){
   }
 };
 
-// Save User Detalis
+/*// Save User Detalis
 exports.addUserDetails=function (userDetails,callback) {
 	for(let i=0;i < userDetails.length;i++){
 		let userDetail=new UsersDetails({
@@ -104,10 +103,12 @@ exports.addUserDetails=function (userDetails,callback) {
 		});
 	}
 
-};
+};*/
 
 
 // Get User by Email
+
+	process.env.JWT_SECRET='meesam';
 exports.getUserBytoken=function(token,callback){
 	let obj;
 	if(token != null){
@@ -157,4 +158,4 @@ exports.getAllUsers=function(aTableInfo,callback){
 	});
 
 };
-})();
+

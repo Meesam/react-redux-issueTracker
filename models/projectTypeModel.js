@@ -1,10 +1,9 @@
-(function () {
-  'use strict';
+import mongoose from 'mongoose';
 
-  let mongoose = require( 'mongoose' );
-  let projectTypeSchema=new mongoose.Schema({
+let projectTypeSchema=new mongoose.Schema({
     Title:{type:String,required:true}
   });
 
-  module.exporst=mongoose.model('ProjectType',projectTypeSchema);
-})();
+const ProjectType = mongoose.model('ProjectType', projectTypeSchema);
+
+module.export=ProjectType;

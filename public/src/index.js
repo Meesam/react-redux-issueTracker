@@ -14,7 +14,7 @@ import SignIn from './pages/loginContainer.jsx';
 import AddProjectIndex from  './pages/addProjectIndex.jsx'
 import '!style-loader!css-loader!sass-loader!font-awesome/css/font-awesome.css';
 import '../styles/css/AdminLTE.css';
-import '../styles/css/skins/skin-blue.min.css';
+import '../styles/css/skins/skin-blue.css';
 import Authenticated from './containers/authenticationContainer.jsx';
 import AppModuleIndex from  './pages/appModulesIndex.jsx';
 import IssueIndex from './pages/issueIndex.jsx';

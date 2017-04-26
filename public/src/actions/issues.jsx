@@ -10,9 +10,12 @@ export const ADD_ISSUE_FAILURE="ADD_ISSUE_FAILURE";
 export const FETCH_ISSUE_BY_ID="FETCH_ISSUE_BY_ID";
 export const FETCH_ISSUE_BY_ID_SUCCESS="FETCH_ISSUE_BY_ID_SUCCESS";
 export const FETCH_ISSUE_BY_ID_FAILURE="FETCH_ISSUE_BY_ID_FAILURE";
-export const FETCH_ISSUE_BY_NAME="";
-export const FETCH_ISSUE_BY_NAME_SUCCESS="";
-export const FETCH_ISSUE_BY_NAME_FAILURE="";
+export const FETCH_ISSUE_BY_NAME="FETCH_ISSUE_BY_NAME";
+export const FETCH_ISSUE_BY_NAME_SUCCESS="FETCH_ISSUE_BY_NAME_SUCCESS";
+export const FETCH_ISSUE_BY_NAME_FAILURE="FETCH_ISSUE_BY_NAME_FAILURE";
+export const ADD_ISSUE_COMMENT="ADD_ISSUE_COMMENT";
+export const ADD_ISSUE_COMMENT_SUCCESS="ADD_ISSUE_COMMENT_SUCCESS";
+export const ADD_ISSUE_COMMENT_FAILURE="ADD_ISSUE_COMMENT_FAILURE";
 
 const aTableInfo={
   CurPage:1,
@@ -77,6 +80,33 @@ export function addIssueFailure(error) {
   }
 }
 
+export function addIssueComment(formValues) {
+  const request=axios({
+    url:`${URL.ROOT_URL}/issues/addcomment`,
+    method:'POST',
+    data:formValues,
+    Headers:[]
+  });
+  return{
+    type:ADD_ISSUE_COMMENT,
+    payload:request
+  }
+}
+
+export function addIssueCommentSuccess(response) {
+  return {
+    type:ADD_ISSUE_COMMENT_SUCCESS,
+    payload:response
+  }
+}
+
+export function addIssueCommentFailure(error) {
+  return{
+    type:ADD_ISSUE_COMMENT_FAILURE,
+    payload:error
+  }
+}
+
 export function fetchIssueById(issueId) {
   const request=axios({
     url:`${URL.ROOT_URL}/issues/${issueId}`,
@@ -103,10 +133,9 @@ export function fetchIssueByIdFailure(error) {
   }
 }
 
-export function fetchIssueByName(pageInfo=null,searchText) {
-  console.log('searchText ' , searchText);
+export function fetchIssueByName(pageInfo=null) {
   const request=axios({
-    url:`${URL.ROOT_URL}/searchissues/${searchText}`,
+    url:`${URL.ROOT_URL}/searchissues`,
     method:'POST',
     data:pageInfo ? pageInfo : aTableInfo,
     Headers:[]
@@ -118,10 +147,14 @@ export function fetchIssueByName(pageInfo=null,searchText) {
 
 }
 
-export function fetchIssueByNameSuccess(issue) {
+export function fetchIssueByNameSuccess(issuesData, curpage) {
+  console.log('issuesData' , issuesData);
   return{
     type:FETCH_ISSUE_BY_NAME_SUCCESS,
-    payload:issue
+    payload:{
+      issues:issuesData,
+      curPage:curpage
+    }
   }
 }
 
