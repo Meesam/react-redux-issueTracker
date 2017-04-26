@@ -4,17 +4,25 @@ import db from '../core/db';
 import redis from '../core/redisClient';
 import {getAllModules} from '../controllers/appmodule/appmenu'
 
-let apiRoutes = express.Router();
-apiRoutes.get('/modules',function(req,resp,next){
- return getAllModules(function(data,err){
-    if(err){
-      return next(err);
-    } else{
-      resp.json(data);
-    }
-  });
-});
 
+export default class moduleapi {
+  constructor() {
+    this.apiRoutes = express.Router();
+  }
 
-module.exports = apiRoutes;
+  getAllroutes() {
+    this.apiRoutes.get('/modules',function(req,resp,next){
+      return getAllModules(function(data,err){
+        if(err){
+          return next(err);
+        } else{
+          resp.json(data);
+        }
+      });
+    });
+    return this.apiRoutes;
+  }
+
+  }
+
 

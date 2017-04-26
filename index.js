@@ -2,16 +2,18 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import UserApi from './api/userapi'
-import ModuleApi from './api/modulesapi';
-import IssueApi from './api/issueapi';
-import ProjectApi from './api/projectapi';
+import moduleapi from './api/modulesapi';
+import issueapi from './api/issueapi';
+import projectapi from './api/projectapi';
 import ProjectTypeApi from './api/projectTypeapi';
 import cookieparser from 'cookie-parser';
 import responseTime from 'response-time';
 import logger from './core/Logger';
 import config from 'config';
-
-const apis=[ModuleApi,ProjectApi,IssueApi,ProjectTypeApi, UserApi];
+var projectApi = new projectapi();
+var issueApi = new issueapi();
+var moduleApi = new moduleapi();
+const apis=[moduleApi.getAllroutes(),issueApi.getAllroutes(),projectApi.getAllroutes(),ProjectTypeApi, UserApi];
 
 class Server{
   constructor(app){
