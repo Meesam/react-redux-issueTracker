@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "npm-run-all --parallel clean build  open:src lint:watch",
-    "clean": "rimraf public/dist",
+    "clean": "rimraf public/dist ",
     "prebuild": "npm run clean",
     "build": "webpack",
     "open:src": "babel-node server.js",
