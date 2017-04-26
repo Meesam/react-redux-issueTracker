@@ -50,7 +50,6 @@ class Server{
   }
 
   getRoute(){
-
     return this.app.use('/api',apis);
   }
 
@@ -59,7 +58,6 @@ class Server{
       logger.debug('Server runing at ' + config.get('WEB_PORT'));
     });
   }
-
 }
 
 export default Server;
