@@ -19,6 +19,7 @@ import Authenticated from './containers/authenticationContainer.jsx';
 import AppModuleIndex from  './pages/appModulesIndex.jsx';
 import IssueIndex from './pages/issueIndex.jsx';
 import NewIssueIndex from './pages/newIssueIndex.jsx';
+import ChartIndex from './pages/chartIndex.jsx';
 
 
 //for React Developer Tools
@@ -38,6 +39,7 @@ render(
         <Route path="modules" component={Authenticated(AppModuleIndex)} />
         <Route path="issues" components={IssueIndex}></Route>
         <Route path="newissue" components={NewIssueIndex}></Route>
+        <Route path="charts" components={ChartIndex}></Route>
         <Route path="editissue/:Id" components={NewIssueIndex}></Route>
         <Route path="*" component={NotFoundPage}/>
       </Route>  
