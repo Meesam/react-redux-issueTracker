@@ -1,5 +1,4 @@
-import axios from 'axios';
-import URL from '../../../appconfig';
+import {doActionPost,doActionGet} from '../common/httpRequest';
 
 export const FETCH_ISSUES="FETCH_ISSUES";
 export const FETCH_ISSUES_SUCCESS="FETCH_ISSUES_SUCCESS";
@@ -23,16 +22,10 @@ const aTableInfo={
 }
 
 export function fetchIssues(pageInfo=null) {
-  const request=axios({
-    url:`${URL.ROOT_URL}/issues`,
-    method:'POST',
-    data:pageInfo ? pageInfo : aTableInfo,
-    Headers:[]
-
-  });
-  return{
-    type:FETCH_ISSUES,
-    payload:request
+  const request = doActionPost({url: 'issues', data: pageInfo});
+  return {
+    type: FETCH_ISSUES,
+    payload: request
   }
 }
 
@@ -54,12 +47,7 @@ export function fetchIssuesFailure(error) {
 }
 
 export function addIssue(formValues) {
-  const request=axios({
-    url:`${URL.ROOT_URL}/issues/add`,
-    method:'POST',
-    data:formValues,
-    Headers:[]
-  });
+  const request = doActionPost({url: 'issues/add', data: formValues});
   return{
     type:ADD_ISSUE,
     payload:request
@@ -81,12 +69,7 @@ export function addIssueFailure(error) {
 }
 
 export function addIssueComment(formValues) {
-  const request=axios({
-    url:`${URL.ROOT_URL}/issues/addcomment`,
-    method:'POST',
-    data:formValues,
-    Headers:[]
-  });
+  const request = doActionPost({url: 'issues/addcomment', data: formValues});
   return{
     type:ADD_ISSUE_COMMENT,
     payload:request
@@ -108,11 +91,7 @@ export function addIssueCommentFailure(error) {
 }
 
 export function fetchIssueById(issueId) {
-  const request=axios({
-    url:`${URL.ROOT_URL}/issues/${issueId}`,
-    method:'GET',
-    Headers:[]
-  });
+  const request = doActionGet({url: 'issues/'+ issueId});
   return{
     type:FETCH_ISSUE_BY_ID,
     payload:request
@@ -134,12 +113,7 @@ export function fetchIssueByIdFailure(error) {
 }
 
 export function fetchIssueByName(pageInfo=null) {
-  const request=axios({
-    url:`${URL.ROOT_URL}/searchissues`,
-    method:'POST',
-    data:pageInfo ? pageInfo : aTableInfo,
-    Headers:[]
-  });
+  const request = doActionPost({url: 'searchissues', data: pageInfo});
   return{
     type:FETCH_ISSUE_BY_NAME,
     payload:request
@@ -148,7 +122,6 @@ export function fetchIssueByName(pageInfo=null) {
 }
 
 export function fetchIssueByNameSuccess(issuesData, curpage) {
-  console.log('issuesData' , issuesData);
   return{
     type:FETCH_ISSUE_BY_NAME_SUCCESS,
     payload:{

@@ -40,7 +40,6 @@ render(
         <Route path="modules" component={Authenticated(AppModuleIndex)} />
         <Route path="issues" components={IssueIndex}></Route>
         <Route path="newissue" components={NewIssueIndex}></Route>
-        <Route path="charts" components={ChartIndex}></Route>
         <Route path="editissue/:Id" components={NewIssueIndex}></Route>
         <Route path="charts" components={ChartsIndex}></Route>
         <Route path="*" component={NotFoundPage}/>
