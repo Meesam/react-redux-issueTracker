@@ -2,6 +2,7 @@ import express from 'express';
 import db from '../core/db';
 import logger from '../core/Logger';
 import {getAllIssues,getIssuesByName,updateIssue,addIssue,addIssueComment,getSearchIssue,getIssueById} from '../controllers/issuemodule/issues';
+import Article from '../controllers/sampleController';
 
 export default class issueapi {
   constructor() {
@@ -86,6 +87,42 @@ export default class issueapi {
             return next(error);
           })
       })
+
+
+    this.apiRoutes.get('/sample', function (req, resp, next) {
+      Article.create({
+         title:'Test article 2',
+         description:'this is a test 3'
+      }).then((d)=>{
+        console.log('d are ' , d);
+        resp.json('success');
+      })
+      .catch((error)=>{
+        console.log('err are ' , error);
+        return next(error);
+      })
+    })
+
+    this.apiRoutes.get('/sample/:Id', function (req, resp, next) {
+      Article.findById(req.params.Id)
+        .then((data)=>{
+          resp.json(data.dataValues);
+        })
+        .catch((error)=>{
+          return next(error);
+        })
+    })
+
+    this.apiRoutes.get('/samples', function (req, resp, next) {
+      Article.findAll()
+        .then((data)=>{
+          resp.json(data);
+        })
+        .catch((error)=>{
+          return next(error);
+        })
+    })
+
     return this.apiRoutes;
   }
 }

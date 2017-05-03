@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample documentation for the open github api. The api is located at https://api.github.com/",
+    "version": "0.0.1",
+    "title": "Github API",
+    "contact": {
+      "email": "john.doe@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
+    }
+  },
+  "host": "api.github.com",
+  "basePath": "/",
+  "produces": ["application/json"],
+  "schemes": [
+    "https"
+  ]
+}

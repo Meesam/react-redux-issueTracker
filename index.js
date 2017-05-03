@@ -37,7 +37,7 @@ class Server{
 
   setMiddleware(){
     this.app.use(express.static(path.join(__dirname+'/public')));
-    this.app.use(express.static(path.join(__dirname+'/public/swagger_dist')));
+    this.app.use(express.static(path.join(__dirname+'/public/swagger')));
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(bodyParser.json());
     this.app.use(cookieparser());
@@ -45,6 +45,9 @@ class Server{
 
   setStartPage(){
     this.app.route('/*').get(function(req, res) {
+      if(req.path==='/swagger'){
+        return res.sendFile(path.join(__dirname +'/public/swagger/index.html'));
+       }
       return res.sendFile(path.join(__dirname+'/public/index.html'));
     });
   }
